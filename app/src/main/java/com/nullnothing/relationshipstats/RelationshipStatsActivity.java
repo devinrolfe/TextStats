@@ -19,8 +19,9 @@ public class RelationshipStatsActivity extends AppCompatActivity {
         viewPager.setAdapter(new RelationshipStatsFragmentPagerAdapter(getSupportFragmentManager(), RelationshipStatsActivity.this));
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     @Override
@@ -36,7 +37,10 @@ public class RelationshipStatsActivity extends AppCompatActivity {
             case R.id.action_search:
 //                openSearch();
                 return true;
-            case R.id.action_settings:
+            case R.id.action_add_contact:
+//               openAddContact();
+                return true;
+            case R.id.action_option:
 //                openSettings();
                 return true;
             default:
