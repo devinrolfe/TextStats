@@ -63,14 +63,11 @@ public class RelationshipStatsActivity extends AppCompatActivity {
 
     public void openSearch() {
 
-
     }
 
     public void openAddContact() {
 
     }
-
-
 
 
 
