@@ -4,4 +4,8 @@
     <string name="action_add_contact">Add Contact</string>
     <string name="action_option">Option</string>
 
+    <!-- String values for Raw data fragment -->
+    <string name="raw_button_send">Get Next Text</string>
+
+
 </resources>
