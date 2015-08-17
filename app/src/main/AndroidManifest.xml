@@ -10,6 +10,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <service
+            android:name=".CollectDataBackground"
+            android:exported="false"/>
+
         <activity
             android:name=".RelationshipStatsActivity"
             android:label="@string/app_name" >
