@@ -2,6 +2,7 @@ package com.nullnothing.relationshipstats;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
@@ -18,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 public class RelationshipStatsActivity extends AppCompatActivity
         implements RawDataFragment.RawDataSelectedListener {
@@ -29,7 +29,7 @@ public class RelationshipStatsActivity extends AppCompatActivity
     private Cursor cur;
 
     private CollectDataReceiver mCollectDataReceiver;
-    private Intent collectServiceIntent;
+//    private Intent collectServiceIntent;
 
 
     @Override
@@ -52,38 +52,32 @@ public class RelationshipStatsActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        // SOMETHING IS NOT WORKING PROPERLY
-        /**
-         * Intent filter will receive the status intent that the collectServiceIntent
-         * will send after it has finished collecting all the data
-         */
-        // The filter's action is BROADCAST_ACTION
-        IntentFilter statusIntentFilter = new IntentFilter(Constants.BROADCAST_ACTION);
-        // Sets the filter's category to DEFAULT
-        statusIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
-        // Instantiates a new DownloadStateReceiver
-        mCollectDataReceiver = new CollectDataReceiver();
-        // Registers the DownloadStateReceiver and its intent filters
-        LocalBroadcastManager.getInstance(this).registerReceiver(mCollectDataReceiver, statusIntentFilter);
+        collectData();
+    }
 
-
-
+    private void collectData() {
         // Create background intent & start the thread
-        collectServiceIntent = new Intent(this, CollectDataBackground.class);
-        collectServiceIntent.setData(Uri.parse("InitialCollection"));
+        Intent collectServiceIntent = new Intent(this, CollectDataBackground.class);
+        collectServiceIntent.setData(Uri.parse("InitialCollectionSetup"));
         this.startService(collectServiceIntent);
 
+//        Intent getNextTextServiceIntent = new Intent(this, CollectDataBackground.class);
+//        getNextTextServiceIntent.setData(Uri.parse("getNextText"));
+//        this.startService(getNextTextServiceIntent);
 
-
-
-        //BELOW WILL GO TO BACKGROUND THREAD//////////////
-        // use "content://sms/sent" to get text messages you sent
-        Uri uriSMSURI = Uri.parse("content://sms/inbox");
-        cur = getContentResolver().query(uriSMSURI, null, null, null, null);
-        //////////////////////////////////////////////
-
+        // Create receiver
+        mCollectDataReceiver = new CollectDataReceiver();
+        // Intent to receive status updates
+        IntentFilter mStatusIntentFilter = new IntentFilter(Constants.BROADCAST_ACTION);
+        // match the receiver with the status intent
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCollectDataReceiver, mStatusIntentFilter);
+        // Intent to receive text messages
+        IntentFilter mTextMessageIntentFilter = new IntentFilter(Constants.ACTION_TEXT_MESSAGE);
+        // match the receiver with the text message intent
+        LocalBroadcastManager.getInstance(this).registerReceiver(mCollectDataReceiver, mTextMessageIntentFilter);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,31 +113,9 @@ public class RelationshipStatsActivity extends AppCompatActivity
 
     // Get next text message in sms logs
     public void getNextText(View view) {
-        TextView textView = (TextView) findViewById(R.id.fragment_raw_data_text_view);
-
-        String sms = "";
-        if (cur.moveToNext()) {
-            sms += "From :" + cur.getString(2) + " : " + cur.getString(cur.getColumnIndex("body"))+"\n";
-            //return text message to fragment
-        }
-
-        RawDataFragment rawDataFrag = (RawDataFragment) getSupportFragmentManager().findFragmentByTag(
-                "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
-
-        if (rawDataFrag != null) {
-            rawDataFrag.getNextTextFromActivity(sms);
-        }
-        else{
-            AlertDialog.Builder builder1 = new AlertDialog.Builder(RelationshipStatsActivity.this);
-            builder1.setMessage("Error: Something went wrong");
-            builder1.setCancelable(true);
-
-            AlertDialog alert11 = builder1.create();
-            alert11.show();
-
-            finish();
-        }
-
+        Intent getNextTextServiceIntent = new Intent(this, CollectDataBackground.class);
+        getNextTextServiceIntent.setData(Uri.parse("getNextText"));
+        this.startService(getNextTextServiceIntent);
     }
 
     // Broadcast receiver for receiving status updates from the IntentService
@@ -151,16 +123,48 @@ public class RelationshipStatsActivity extends AppCompatActivity
 
         // Prevents instantiation
         private CollectDataReceiver() {
-
         }
         // Called when intent is received which it registered
         public void onReceive(Context context, Intent intent) {
             /**
              * Handle the intent here.
              */
+            String action = intent.getAction();
+
+            switch(action) {
+
+                case Constants.BROADCAST_ACTION:
+
+                    new AlertDialog.Builder(context)
+                            .setTitle("Delete entry")
+                            .setMessage("Are you sure you want to delete this entry?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    break;
+                case Constants.ACTION_TEXT_MESSAGE:
+
+                    String sms = intent.getStringExtra(Constants.EXTENDED_DATA_TEXT);
+
+                    RawDataFragment rawDataFrag = (RawDataFragment) getSupportFragmentManager().findFragmentByTag(
+                            "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+
+                    if (rawDataFrag != null) {
+                        rawDataFrag.getNextTextFromActivity(sms);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
-
     }
-
-
 }

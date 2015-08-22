@@ -25,6 +25,16 @@ public class BroadcastNotifier {
         mBroadcaster.sendBroadcast(localIntent);
     }
 
+    public void broadcastIntentWithTexTMessage(String textMessage) {
+        Intent localIntent = new Intent(Constants.ACTION_TEXT_MESSAGE);
+
+        localIntent.putExtra(Constants.EXTENDED_DATA_TEXT, textMessage);
+        localIntent.addCategory(Intent.CATEGORY_DEFAULT);
+
+        mBroadcaster.sendBroadcast(localIntent);
+    }
+
+
     //TODO:: don't know if this method should be implemented
     //public notifyProgress(String logData)
 
