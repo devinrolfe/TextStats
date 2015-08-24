@@ -4,15 +4,9 @@ public final class Constants {
 
     // Define a custom intend action
     public static final String BROADCAST_ACTION = "com.nullnothing.relationshipstats.BROADCAST";
-    public static final String ACTION_TEXT_MESSAGE = "com.nullnothing.relationshipstats.TEXT_MESSAGE";
     // Defines the key for the status "extra" in an intent
     public static final String EXTENDED_DATA_STATUS = "com.nullnothing.relationshipstats.STATUS";
-
-    public static final String EXTENDED_DATA_TEXT = "com.nullnothing.relationshipstats.TEXT";
-
-    public static final String EXTENDED_VIEW_ID = "com.nullnothing.relationshipstats.VIEW_ID";
-
-
+    public static final String EXTENDED_DATA_TEXTLIST = "com.nullnothing.relationshipstats.TEXTLIST";
     // Status values to broadcast to the Activity
 
     // The download is starting

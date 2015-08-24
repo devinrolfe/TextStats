@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 
+import java.util.ArrayList;
+
 public class CollectDataBackground extends IntentService {
 
-    private Cursor cur1;
+    private Cursor cur;
 
 
     private BroadcastNotifier mBroadcaster = new BroadcastNotifier(this);
@@ -22,40 +24,26 @@ public class CollectDataBackground extends IntentService {
         // Do work here based on what dataString is...
         //use mBroadcaster to send status intents
         int status;
-
-        if (dataString.equals("InitialCollectionSetup")) {
-            Uri uriSMSURI = Uri.parse("content://sms/inbox");
-            cur1 = getContentResolver().query(uriSMSURI, null, null, null, null);
-
-            mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE);
-        }
-        else if (dataString.equals("getNextText")) {
-
-            if (cur1 != null) {
-                String sms = "";
-
-                if (cur1.moveToNext()) {
-                    sms += "From :" + cur1.getString(2) + " : " + cur1.getString(cur1.getColumnIndex("body")) + "\n";
-                    //return text message to fragment
+        switch (dataString) {
+            case "InitialCollectionSetup":
+                Uri uriSMSURI = Uri.parse("content://sms/inbox");
+                cur = getContentResolver().query(uriSMSURI, null, null, null, null);
+                int counter = 0;
+                ArrayList<String> textMessages = new ArrayList<String>();
+                while (cur != null && counter < 100) {
+                    if (cur.moveToNext()) {
+                        textMessages.add("From :" + cur.getString(2) + " : " + cur.getString(cur.getColumnIndex("body")) + "\n");
+                    }
+                    counter++;
                 }
-                mBroadcaster.broadcastIntentWithTexTMessage(sms);
-            }
+                if(cur != null) cur.close();
+
+                mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
+                break;
+            default:
+                break;
         }
-        else{
-            // should do something about error message returning
-        }
-
-
-
-
 
     }
-
-
-
-
-
-
 }
-
 
