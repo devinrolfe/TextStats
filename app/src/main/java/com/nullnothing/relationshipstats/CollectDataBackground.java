@@ -10,8 +10,7 @@ import java.util.ArrayList;
 public class CollectDataBackground extends IntentService {
 
     private Cursor cur;
-
-
+    
     private BroadcastNotifier mBroadcaster = new BroadcastNotifier(this);
 
     public CollectDataBackground() {
@@ -39,6 +38,14 @@ public class CollectDataBackground extends IntentService {
                 if(cur != null) cur.close();
 
                 mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
+
+                // Need to create objects to save contacts info, then sort in array then store in xml file
+                // Need to create objects for messages, calls, and then again sort in array? this could take up alot
+                // of RAM???? Better solution is to just write to file imedidatily and insert in correct location
+                // insertion O(n)
+                // small optimization. have one cursor on each inbox and sent and add accordly.
+                // also only work on 1 contact at a time to optimize things
+
                 break;
             default:
                 break;
