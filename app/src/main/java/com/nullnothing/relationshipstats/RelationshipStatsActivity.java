@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -126,9 +125,8 @@ public class RelationshipStatsActivity extends AppCompatActivity
         }
         // Called when intent is received which it registered
         public void onReceive(Context context, Intent intent) {
-            Log.d("RelationshipActivity", "WE RECEIVED ATLEAST");
-            switch(intent.getIntExtra(Constants.EXTENDED_DATA_STATUS, Constants.STATE_ACTION_COMPLETE)) {
 
+            switch(intent.getIntExtra(Constants.EXTENDED_DATA_STATUS, -1)) {
                 case Constants.STATE_ACTION_COMPLETE:
                     textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
                     break;
