@@ -7,8 +7,7 @@ import java.text.SimpleDateFormat;
  */
 public class TextMessage {
 
-    SimpleDateFormat timestamp;
-    String message;
-    int wordCount;
-
+    private SimpleDateFormat timestamp;
+    private String message;
+    private int wordCount;
 }

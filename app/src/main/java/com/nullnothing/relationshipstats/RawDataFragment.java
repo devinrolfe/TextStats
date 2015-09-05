@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 
@@ -38,7 +37,7 @@ public class RawDataFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_raw_data, container, false);
-        FrameLayout frameLayout = (FrameLayout) view;
+//        FrameLayout frameLayout = (FrameLayout) view;
         textMessageView = (TextView) view.findViewById(R.id.fragment_raw_data_text_view);
         textMessageView.setText(this.getTag());
         return view;
