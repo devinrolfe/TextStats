@@ -7,16 +7,34 @@ public class ContactInfoHolder {
 
     private String name;
     private String primaryPhoneNumber;
-    private ArrayList<String> phoneNumbers = new ArrayList<String>();
+    private ArrayList<String> phoneNumbers;
     private String raw_contact_id;
-    private ArrayList<TextMessage> messages = new ArrayList<TextMessage>();
+    private ArrayList<SentMessage> sentMessages;
+    private ArrayList<ReceivedMessage> receivedMessages;
 
 
-    public ContactInfoHolder(String name, ArrayList<String> phoneNumbers, String raw_contact_id) {
+    public ContactInfoHolder(String raw_contact_id, String name, ArrayList<String> phoneNumbers) {
         this.name = name;
         this.primaryPhoneNumber = phoneNumbers.get(0);
         this.phoneNumbers = phoneNumbers;
         this.raw_contact_id = raw_contact_id;
+
+        sentMessages = new ArrayList<SentMessage>();
+        receivedMessages = new ArrayList<ReceivedMessage>();
+    }
+
+    public String getId() { return this.raw_contact_id; }
+    public String getPrimaryPhoneNumber() { return this.primaryPhoneNumber; }
+    public String getName() { return this.name; }
+
+    public void addTextMessage(TextMessage msg) {
+
+        if (msg instanceof SentMessage) {
+           sentMessages.add((SentMessage)msg);
+        }
+        else if (msg instanceof ReceivedMessage) {
+            receivedMessages.add((ReceivedMessage)msg);
+        }
     }
 
     public void print() {
