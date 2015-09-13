@@ -1,6 +1,8 @@
 package com.nullnothing.relationshipstats;
 
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class ContactInfoHolder {
@@ -21,6 +23,14 @@ public class ContactInfoHolder {
 
         sentMessages = new ArrayList<SentMessage>();
         receivedMessages = new ArrayList<ReceivedMessage>();
+
+        Log.d("ContactName", this.name);
+        Log.d("Prim#", this.primaryPhoneNumber);
+        for(int i=1; i < phoneNumbers.size();i++){
+            Log.d("Other#'s", phoneNumbers.get(i));
+        }
+
+
     }
 
     public String getId() { return this.raw_contact_id; }

@@ -76,7 +76,7 @@ public class CollectDataBackground extends IntentService {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
                     while (pCur.moveToNext()) {
                         String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        allContactNumbers.add(contactNumber);
+                        allContactNumbers.add(UtilsRelationshipStats.stripPhoneNumber(contactNumber));
                         break;
                     }
                     pCur.close();
@@ -109,28 +109,26 @@ public class CollectDataBackground extends IntentService {
         String message;
         long timestamp;
         ReceivedMessage rm;
+        int counter = 0;
 
         while (cur.moveToNext()) {
                 id = cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON));
-                from = cur.getString(cur.getColumnIndex("creator"));
+                from = UtilsRelationshipStats.stripPhoneNumber(cur.getString(cur.getColumnIndex("address")));
                 message = cur.getString(cur.getColumnIndex("body"));
                 timestamp = Long.parseLong(cur.getString(cur.getColumnIndex("date")));
 
                 rm = new ReceivedMessage(timestamp, message);
 
-            if (id != null) {
+            if (from != null) {
                 MainInfoHolder.getInstance().addTextMessage(id, from, rm);
-            }
-            else{
-                // Messages from non contacts dont have ID, should use phone# as hash then?
-                Log.d("NULL ID WTF", "From :" + cur.getString(2) + " : " +
-                        cur.getString(cur.getColumnIndex("body")) + "\nid: " +
-                        cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON)));
             }
         }
         Log.d("collectTextMessages", "END " + (System.currentTimeMillis() - startTime) );
+        Log.d("TEXT MISSED", "" + counter);
         if(cur != null) cur.close();
     }
+
+
 
 }
 

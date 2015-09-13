@@ -43,7 +43,7 @@ public class MainInfoHolder {
 
         if(this.contactMap.get(from) != null) {
             // we want contactMap to append tm to ConactInfoHolder correct arraylist
-            this.contactMap.put(id, tm);
+            this.contactMap.put(from, tm);
         }
         else{
             // contact doesnt exist, make one since its not saved on phones contacts
