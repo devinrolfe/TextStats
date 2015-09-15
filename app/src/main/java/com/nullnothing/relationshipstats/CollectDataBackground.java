@@ -12,6 +12,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class CollectDataBackground extends IntentService {
 
     private BroadcastNotifier mBroadcaster = new BroadcastNotifier(this);
@@ -43,7 +44,7 @@ public class CollectDataBackground extends IntentService {
                 if(cur != null) cur.close();
 
                 collectContacts();
-                collectTextMessages();
+//                collectTextMessages();
 
                 mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
 
@@ -77,9 +78,14 @@ public class CollectDataBackground extends IntentService {
                     while (pCur.moveToNext()) {
                         String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         allContactNumbers.add(UtilsRelationshipStats.stripPhoneNumber(contactNumber));
+                        /**
+                         * TESTING
+                         */
                         break;
                     }
                     pCur.close();
+
+
 
                     contactInfoHolder = new ContactInfoHolder(raw_contact_id, name, allContactNumbers);
                     contactList.add(contactInfoHolder);
