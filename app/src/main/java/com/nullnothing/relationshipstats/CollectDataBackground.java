@@ -9,6 +9,8 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -66,21 +68,37 @@ public class CollectDataBackground extends IntentService {
 
         if (cur.getCount() > 0) {
             ArrayList<String> allContactNumbers;
+            String id;
+            String name;
+            String raw_contact_id;
+            String contactNumber;
+            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+
             while (cur.moveToNext()) {
                 allContactNumbers = new ArrayList<String>();
 
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                String raw_contact_id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.NAME_RAW_CONTACT_ID));
+                id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                raw_contact_id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.NAME_RAW_CONTACT_ID));
 
                 if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
                     while (pCur.moveToNext()) {
-                        String contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        allContactNumbers.add(UtilsRelationshipStats.stripPhoneNumber(contactNumber));
-                        /**
-                         * TESTING
-                         */
+                        contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        //allContactNumbers.add(UtilsRelationshipStats.stripPhoneNumber(contactNumber));
+                        allContactNumbers.add(contactNumber);
+
+//                        try {
+//                            PhoneNumber teleNumber = phoneUtil.parse(contactNumber, "ZZ");
+//                            Log.d("Formated#", teleNumber.getNationalNumber() + "");
+//
+//                        } catch (NumberParseException e) {
+//                            System.err.println("NumberParseException was thrown: " + e.toString());
+//                        }
+
+                        Log.d("Formated#", PhoneNumberUtil.normalizeDigitsOnly(contactNumber));
+
+
                         break;
                     }
                     pCur.close();
@@ -118,8 +136,9 @@ public class CollectDataBackground extends IntentService {
         int counter = 0;
 
         while (cur.moveToNext()) {
-                id = cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON));
-                from = UtilsRelationshipStats.stripPhoneNumber(cur.getString(cur.getColumnIndex("address")));
+            id = cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON));
+//                from = UtilsRelationshipStats.stripPhoneNumber(cur.getString(cur.getColumnIndex("address")));
+                from = "";
                 message = cur.getString(cur.getColumnIndex("body"));
                 timestamp = Long.parseLong(cur.getString(cur.getColumnIndex("date")));
 
