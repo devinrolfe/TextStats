@@ -46,7 +46,7 @@ public class CollectDataBackground extends IntentService {
                 if(cur != null) cur.close();
 
                 collectContacts();
-//                collectTextMessages();
+                collectTextMessages();
 
                 mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
 
@@ -83,27 +83,14 @@ public class CollectDataBackground extends IntentService {
 
                 if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
+//                    Log.d("CONTACT", "START - " + name + ", ID - " + raw_contact_id);
                     while (pCur.moveToNext()) {
                         contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        //allContactNumbers.add(UtilsRelationshipStats.stripPhoneNumber(contactNumber));
                         allContactNumbers.add(contactNumber);
-
-//                        try {
-//                            PhoneNumber teleNumber = phoneUtil.parse(contactNumber, "ZZ");
-//                            Log.d("Formated#", teleNumber.getNationalNumber() + "");
-//
-//                        } catch (NumberParseException e) {
-//                            System.err.println("NumberParseException was thrown: " + e.toString());
-//                        }
-
-                        Log.d("Formated#", PhoneNumberUtil.normalizeDigitsOnly(contactNumber));
-
-
                         break;
                     }
+//                    Log.d("CONTACT", "END");
                     pCur.close();
-
-
 
                     contactInfoHolder = new ContactInfoHolder(raw_contact_id, name, allContactNumbers);
                     contactList.add(contactInfoHolder);
@@ -123,34 +110,63 @@ public class CollectDataBackground extends IntentService {
 
         long startTime = System.currentTimeMillis();
         Log.d("collectTextMessages", "START " + startTime);
-        Uri uriSMSURI = Uri.parse("content://sms/inbox");
-        Cursor cur = getContentResolver().query(uriSMSURI, null, null, null, null);
 
-        HashMap<String, ArrayList<ReceivedMessage>> receivedMessages = new HashMap<String, ArrayList<ReceivedMessage>>();
+        Uri uriSMSURI = Uri.parse("content://sms/inbox");
+        getMessages(uriSMSURI, false);
+        uriSMSURI = Uri.parse("content://sms/sent");
+        getMessages(uriSMSURI, true);
+
+        Log.d("collectTextMessages", "END " + (System.currentTimeMillis() - startTime));
+
+        ContactInfoHolder thing = MainInfoHolder.getInstance().getContacts().get("71").getValue();
+        Log.d(thing.getName(), "" + thing.getTextReceived());
+        Log.d(thing.getName(), "" + thing.getTextSent());
+    }
+
+    private void getMessages(Uri uriSMSURI, boolean isASent) {
+        Cursor cur = null;
 
         String id;
         String from;
         String message;
         long timestamp;
-        ReceivedMessage rm;
-        int counter = 0;
+        TextMessage msg;
+        HashMap<String, String> fromToId = new HashMap<String, String>();
 
-        while (cur.moveToNext()) {
-            id = cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON));
-//                from = UtilsRelationshipStats.stripPhoneNumber(cur.getString(cur.getColumnIndex("address")));
-                from = "";
+        for(int whichRun=0; whichRun < 2; whichRun++) {
+
+            cur = getContentResolver().query(uriSMSURI, null, null, null, null);
+            while (cur.moveToNext()) {
+                id = cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON));
+                from = cur.getString(cur.getColumnIndex("address"));
                 message = cur.getString(cur.getColumnIndex("body"));
                 timestamp = Long.parseLong(cur.getString(cur.getColumnIndex("date")));
 
-                rm = new ReceivedMessage(timestamp, message);
-
-            if (from != null) {
-                MainInfoHolder.getInstance().addTextMessage(id, from, rm);
+                switch (whichRun) {
+                    case 0: // first run to create hashMap mapping
+                        if (id != null && from != null) {
+                            if (fromToId.get(id) != null) {
+                                fromToId.put(from, id);
+                            }
+                        }
+                        break;
+                    case 1: // second run to properly add
+                        msg = isASent ? new SentMessage(timestamp, message) : new ReceivedMessage(timestamp, message);
+                        if (from != null) {
+                            if (id == null) {
+                                id = fromToId.get(from);
+                            }
+                            if ( id != null) {
+                                MainInfoHolder.getInstance().addTextMessage(id, from, msg);
+                            }
+                            // if no id is found, then the text message does not have
+                            // an associated contact to it.
+                        }
+                        break;
+                }
             }
+            if(cur != null) cur.close();
         }
-        Log.d("collectTextMessages", "END " + (System.currentTimeMillis() - startTime) );
-        Log.d("TEXT MISSED", "" + counter);
-        if(cur != null) cur.close();
     }
 
 

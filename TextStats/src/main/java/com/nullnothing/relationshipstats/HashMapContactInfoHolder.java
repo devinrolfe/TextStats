@@ -95,7 +95,8 @@ public class HashMapContactInfoHolder {
                     if(e.getKey().equals(k)){
                         e.setValue(v);
                     }
-                    e = e.next;
+                    //e = e.next;
+                    break;
                 }
             }
         }

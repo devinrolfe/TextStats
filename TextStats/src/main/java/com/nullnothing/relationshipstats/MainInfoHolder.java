@@ -32,7 +32,7 @@ public class MainInfoHolder {
      * Method adds contact information, will overwrite previous contact infomation if it exists
      */
     public void addContact(ContactInfoHolder contactInfoHolder) {
-        this.contactMap.put(contactInfoHolder.getPrimaryPhoneNumber(), contactInfoHolder);
+        this.contactMap.put(contactInfoHolder.getId(), contactInfoHolder);
         this.contactList.add(contactInfoHolder.getName());
     }
 
@@ -41,12 +41,12 @@ public class MainInfoHolder {
      */
     public void addTextMessage(String id, String from, TextMessage tm) {
 
-        if(this.contactMap.get(from) != null) {
+        if(this.contactMap.get(id) != null) {
             // we want contactMap to append tm to ConactInfoHolder correct arraylist
-            this.contactMap.put(from, tm);
+            this.contactMap.put(id, tm);
         }
         else{
-            // contact doesnt exist, make one since its not saved on phones contacts
+            // contact doesnt exist, make one since its not saved on phones contacts?
             Log.d("addTextMessage ", from + ": " + id + " " + tm.getMessage());
         }
 

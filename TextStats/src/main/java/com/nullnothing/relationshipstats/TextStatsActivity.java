@@ -19,7 +19,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-public class RelationshipStatsActivity extends AppCompatActivity
+public class TextStatsActivity extends AppCompatActivity
         implements RawDataFragment.RawDataSelectedListener {
 
     private DrawerLayout mDrawer;
@@ -44,7 +44,7 @@ public class RelationshipStatsActivity extends AppCompatActivity
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new RelationshipStatsFragmentPagerAdapter(getSupportFragmentManager(), RelationshipStatsActivity.this));
+        viewPager.setAdapter(new TextStatsFragmentPagerAdapter(getSupportFragmentManager(), TextStatsActivity.this));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

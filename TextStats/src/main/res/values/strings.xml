@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Relationship Stats</string>
+    <string name="app_name">Text Stats</string>
     <string name="action_search">Search</string>
     <string name="action_add_contact">Add Contact</string>
     <string name="action_option">Option</string>

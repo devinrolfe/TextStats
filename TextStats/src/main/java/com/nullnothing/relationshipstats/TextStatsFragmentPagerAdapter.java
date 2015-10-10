@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-public class RelationshipStatsFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+public class TextStatsFragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Raw Data", "Card" }; //Change Raw Data to Graph when ready for that part
+    private String tabTitles[] = new String[] { "Graph", "Card" }; //Change Raw Data to Graph when ready for that part
     private Context context;
 
-    public RelationshipStatsFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public TextStatsFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         this.context = context;
     }
@@ -24,7 +24,7 @@ public class RelationshipStatsFragmentPagerAdapter extends android.support.v4.ap
 
         switch (position){
             case 0:
-                return new RawDataFragment();
+                return new GraphFragment();
             case 1:
                 return new CardFragment();
             default:
