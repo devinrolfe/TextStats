@@ -59,6 +59,8 @@ public class ContactInfoHolder {
             System.out.println("other#: " + otherPhoneNumbers.get(i));
         }
         System.out.println("ID: " + raw_contact_id);
+        System.out.println("Sent: " + textSent);
+        System.out.println("Recieved: " + textReceived);
         System.out.println("-------------------------------------");
     }
 

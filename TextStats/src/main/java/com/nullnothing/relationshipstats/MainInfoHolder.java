@@ -32,8 +32,10 @@ public class MainInfoHolder {
      * Method adds contact information, will overwrite previous contact infomation if it exists
      */
     public void addContact(ContactInfoHolder contactInfoHolder) {
-        this.contactMap.put(contactInfoHolder.getId(), contactInfoHolder);
-        this.contactList.add(contactInfoHolder.getName());
+        if(this.contactMap.get(contactInfoHolder.getId()) == null) { //make sure not to overwrite previous contact
+            this.contactMap.put(contactInfoHolder.getId(), contactInfoHolder);
+            this.contactList.add(contactInfoHolder.getName());
+        }
     }
 
     /**

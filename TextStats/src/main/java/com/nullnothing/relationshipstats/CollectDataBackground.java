@@ -9,13 +9,14 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 import android.util.Log;
 
-import com.google.i18n.phonenumbers.PhoneNumberUtil;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class CollectDataBackground extends IntentService {
+
+    private static HashMap<String, String> fromToId = new HashMap<String, String>();
 
     private BroadcastNotifier mBroadcaster = new BroadcastNotifier(this);
 
@@ -45,7 +46,7 @@ public class CollectDataBackground extends IntentService {
                 }
                 if(cur != null) cur.close();
 
-                collectContacts();
+                getAllContacts();
                 collectTextMessages();
 
                 mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
@@ -59,51 +60,46 @@ public class CollectDataBackground extends IntentService {
 
     }
 
-    private void collectContacts() {
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
+    public void getAllContacts() {
         ContactInfoHolder contactInfoHolder;
-        ArrayList<ContactInfoHolder> contactList = new ArrayList<ContactInfoHolder>();
+        HashMap<String, ContactInfoHolder> contactMap = new HashMap<String, ContactInfoHolder>();
 
-        if (cur.getCount() > 0) {
-            ArrayList<String> allContactNumbers;
-            String id;
-            String name;
-            String raw_contact_id;
-            String contactNumber;
-            PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        String contactId;
+        String contactName;
+        String rawContactId;
+        ArrayList<String> contactPhones;
 
-            while (cur.moveToNext()) {
-                allContactNumbers = new ArrayList<String>();
-
-                id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                raw_contact_id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.NAME_RAW_CONTACT_ID));
-
-                if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{ id }, null);
-//                    Log.d("CONTACT", "START - " + name + ", ID - " + raw_contact_id);
-                    while (pCur.moveToNext()) {
-                        contactNumber = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        allContactNumbers.add(contactNumber);
-                        break;
-                    }
-//                    Log.d("CONTACT", "END");
-                    pCur.close();
-
-                    contactInfoHolder = new ContactInfoHolder(raw_contact_id, name, allContactNumbers);
-                    contactList.add(contactInfoHolder);
-                }
-            }
-            MainInfoHolder.contactCount = contactList.size();
-
-            for(ContactInfoHolder tempContactInfoHolder : contactList) {
-                MainInfoHolder.getInstance().addContact(tempContactInfoHolder);
-            }
+        ContentResolver cr = getContentResolver();
+        Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        while (phones.moveToNext()){
+            contactId = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+            contactName = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            rawContactId = phones.getString(phones.getColumnIndex(ContactsContract.Contacts.NAME_RAW_CONTACT_ID));
+            contactPhones=getAllNumbersForContact(cr, contactId, rawContactId);
+            contactInfoHolder = new ContactInfoHolder(rawContactId, contactName, contactPhones);
+            if(contactMap.get(rawContactId) == null) contactMap.put(rawContactId, contactInfoHolder);
         }
-        if(cur != null) cur.close();
+        phones.close();
 
+        MainInfoHolder.contactCount = contactMap.size();
+
+        for (Map.Entry<String, ContactInfoHolder> entry : contactMap.entrySet()) {
+            MainInfoHolder.getInstance().addContact(entry.getValue());
+        }
+    }
+
+    public ArrayList<String> getAllNumbersForContact(ContentResolver cr, String contactId, String rawContactId) {
+        ArrayList<String> phoneNumbers= new ArrayList<String>();
+        Cursor numbers = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+        while (numbers.moveToNext()) {
+            String phoneNumber = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            phoneNumbers.add(phoneNumber);
+            if(fromToId.get(phoneNumber) == null) fromToId.put(phoneNumber, rawContactId);
+        }
+        numbers.close();
+
+        return phoneNumbers;
     }
 
     private void collectTextMessages() {
@@ -117,21 +113,18 @@ public class CollectDataBackground extends IntentService {
         getMessages(uriSMSURI, true);
 
         Log.d("collectTextMessages", "END " + (System.currentTimeMillis() - startTime));
-
-        ContactInfoHolder thing = MainInfoHolder.getInstance().getContacts().get("71").getValue();
-        Log.d(thing.getName(), "" + thing.getTextReceived());
-        Log.d(thing.getName(), "" + thing.getTextSent());
     }
 
     private void getMessages(Uri uriSMSURI, boolean isASent) {
         Cursor cur = null;
+
+        int stopTest = 0;
 
         String id;
         String from;
         String message;
         long timestamp;
         TextMessage msg;
-        HashMap<String, String> fromToId = new HashMap<String, String>();
 
         for(int whichRun=0; whichRun < 2; whichRun++) {
 
@@ -144,14 +137,21 @@ public class CollectDataBackground extends IntentService {
 
                 switch (whichRun) {
                     case 0: // first run to create hashMap mapping
-                        if (id != null && from != null) {
-                            if (fromToId.get(id) != null) {
+                        if (id == null) {
+                            if (fromToId.get(from) == null) {
+                                id = getContactIdFromNumber(from);
+                                fromToId.put(from, id);
+                            }
+                        }
+                        else if (id != null && from != null) {
+                            if (fromToId.get(from) == null) {
                                 fromToId.put(from, id);
                             }
                         }
                         break;
                     case 1: // second run to properly add
                         msg = isASent ? new SentMessage(timestamp, message) : new ReceivedMessage(timestamp, message);
+
                         if (from != null) {
                             if (id == null) {
                                 id = fromToId.get(from);
@@ -167,9 +167,50 @@ public class CollectDataBackground extends IntentService {
             }
             if(cur != null) cur.close();
         }
+        int stop = 1;
+        Log.d("SENT", "" + stopTest);
     }
 
+    public String getContactIdFromNumber(String phoneNumber) {
+        String contactId = "";
+        String rawContactId = "";
 
+        ContentResolver contentResolver = getContentResolver();
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+
+        String[] projection = new String[] {ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID};
+
+        Cursor cursor =
+                contentResolver.query(
+                        uri,
+                        projection,
+                        null,
+                        null,
+                        null);
+
+        if(cursor!=null) {
+            while(cursor.moveToNext()){
+                contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                break;
+            }
+            cursor.close();
+        }
+        if (!contactId.equals("")) {
+            Cursor c = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
+                    new String[]{ContactsContract.RawContacts._ID},
+                    ContactsContract.RawContacts.CONTACT_ID + "=?",
+                    new String[]{String.valueOf(contactId)}, null);
+            try {
+                if (c.moveToFirst()) {
+                    rawContactId = c.getString(0);
+                }
+            } finally {
+                c.close();
+            }
+        }
+        return rawContactId;
+    }
 
 }
 
