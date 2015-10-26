@@ -1,8 +1,6 @@
 package com.nullnothing.relationshipstats;
 
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class MainInfoHolder {
@@ -49,7 +47,7 @@ public class MainInfoHolder {
         }
         else{
             // contact doesnt exist, make one since its not saved on phones contacts?
-            Log.d("addTextMessage ", from + ": " + id + " " + tm.getMessage());
+//            Log.d("addTextMessage ", from + ": " + id + " " + tm.getMessage());
         }
 
 
