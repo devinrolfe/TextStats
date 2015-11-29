@@ -3,9 +3,6 @@ package com.nullnothing.relationshipstats;
 import android.net.Uri;
 import android.util.Log;
 
-/**
- * Created by johndoe on 2015-10-26.
- */
 public class InboxThread implements Runnable {
 
     @Override

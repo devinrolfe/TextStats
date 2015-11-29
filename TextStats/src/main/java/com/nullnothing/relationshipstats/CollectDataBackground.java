@@ -2,18 +2,10 @@ package com.nullnothing.relationshipstats;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.Telephony;
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class CollectDataBackground extends IntentService {
-
-    private static HashMap<String, String> fromToId = new HashMap<String, String>();
 
     private BroadcastNotifier mBroadcaster = new BroadcastNotifier(this);
 
@@ -29,27 +21,27 @@ public class CollectDataBackground extends IntentService {
         int status;
         switch (dataString) {
             case "InitialCollectionSetup":
-                Uri uriSMSURI = Uri.parse("content://sms/inbox");
-                Cursor cur = getContentResolver().query(uriSMSURI, null, null, null, null);
-                int counter = 0;
-                ArrayList<String> textMessages = new ArrayList<String>();
-                while (cur != null && counter < 100) {
-                    if (cur.moveToNext()) {
-                        textMessages.add("From :" + cur.getString(2) + " : " +
-                                cur.getString(cur.getColumnIndex("body")) + "\nid: " +
-                                cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON)));
-                    }
-                    counter++;
-                }
-                if(cur != null) cur.close();
+//                Uri uriSMSURI = Uri.parse("content://sms/inbox");
+//                Cursor cur = getContentResolver().query(uriSMSURI, null, null, null, null);
+//                int counter = 0;
+//                ArrayList<String> textMessages = new ArrayList<String>();
+//                while (cur != null && counter < 100) {
+//                    if (cur.moveToNext()) {
+//                        textMessages.add("From :" + cur.getString(2) + " : " +
+//                                cur.getString(cur.getColumnIndex("body")) + "\nid: " +
+//                                cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON)));
+//                    }
+//                    counter++;
+//                }
+//                if(cur != null) cur.close();
 
                 getAllContacts();
                 collectTextMessages();
 
-                mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE, textMessages);
+                mBroadcaster.broadcastIntentWithState(Constants.STATE_ACTION_COMPLETE);
 
                 Log.d("BACKGROUND_THREAD", "DONE");
-
+                TextStatsActivity.backgroundCollectionDone = true;
                 break;
             default:
                 break;
@@ -82,12 +74,7 @@ public class CollectDataBackground extends IntentService {
 
             }
         }
-
         Log.d("collectTextMessages", "END " + (System.currentTimeMillis() - startTime));
-
-        ContactInfoHolder thing = MainInfoHolder.getInstance().getContacts().get("49").getValue();
-        Log.d(thing.getName(), "" + thing.getTextReceived());
-        Log.d(thing.getName(), "" + thing.getTextSent());
     }
 
 }

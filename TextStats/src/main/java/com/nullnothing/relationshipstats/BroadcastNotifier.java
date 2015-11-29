@@ -28,6 +28,15 @@ public class BroadcastNotifier {
         mBroadcaster.sendBroadcast(localIntent);
     }
 
+    public void broadcastIntentWithState(int status) {
+        Intent localIntent = new Intent(Constants.BROADCAST_ACTION);
+
+        localIntent.putExtra(Constants.EXTENDED_DATA_STATUS, status);
+        localIntent.addCategory(Intent.CATEGORY_DEFAULT);
+
+        mBroadcaster.sendBroadcast(localIntent);
+    }
+
 
 
     //TODO:: don't know if this method should be implemented

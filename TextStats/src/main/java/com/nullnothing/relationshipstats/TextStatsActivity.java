@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 
 public class TextStatsActivity extends AppCompatActivity
         implements RawDataFragment.RawDataSelectedListener {
+
+    public static boolean backgroundCollectionDone = false;
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -50,6 +53,9 @@ public class TextStatsActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        /* TODO: Need to wait for it to finish collecting data before we display the graph, atm
+            we can just have a static boolean value to do thing bit.
+        */
         collectData();
     }
 
@@ -61,7 +67,6 @@ public class TextStatsActivity extends AppCompatActivity
         mStatusIntentFilter.addCategory(Intent.CATEGORY_DEFAULT);
         // match the receiver with the status intent
         LocalBroadcastManager.getInstance(this).registerReceiver(mCollectDataReceiver, mStatusIntentFilter);
-
 
         // Create background intent & start the thread
         Intent collectServiceIntent = new Intent(this, CollectDataBackground.class);
@@ -128,7 +133,15 @@ public class TextStatsActivity extends AppCompatActivity
 
             switch(intent.getIntExtra(Constants.EXTENDED_DATA_STATUS, -1)) {
                 case Constants.STATE_ACTION_COMPLETE:
-                    textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
+                    Log.d("CollectData", "Finished");
+
+                    // TODO: Call method to current fragment to upload data
+                    FragmentInterface fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
+                            "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+
+                    fragment.initialSetup();
+
+//                    textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
                     break;
                 default:
                     break;

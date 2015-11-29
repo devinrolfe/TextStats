@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 
 // In this case, the fragment displays simple text based on the page
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements FragmentInterface {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -22,6 +22,16 @@ public class CardFragment extends Fragment {
         textView.setText("Fragment: Card");
         return view;
     }
+
+
+
+
+    public void initialSetup() {
+
+        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
+    }
+
+
 }
 
 

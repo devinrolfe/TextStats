@@ -6,13 +6,15 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 
+import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
+import com.nullnothing.relationshipstats.TextMessageDecorator.MonthDecorator;
+import com.nullnothing.relationshipstats.TextMessageDecorator.WeekDecorator;
+import com.nullnothing.relationshipstats.TextMessageDecorator.YearDecorator;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by johndoe on 2015-10-26.
- */
 public class CollectData {
 
     private static CollectData mCollectData;
@@ -121,6 +123,10 @@ public class CollectData {
                     case 1: // second run to properly add
                         msg = isASent ? new SentMessage(timestamp, message) : new ReceivedMessage(timestamp, message);
 
+                        // TODO : Decorate with proper Time Period
+                        msg = decorateMessage(msg);
+
+
                         if (from != null) {
                             if (id == null) {
                                 id = fromToId.get(from);
@@ -178,4 +184,25 @@ public class CollectData {
         }
         return rawContactId;
     }
+
+    public TextMessage decorateMessage(TextMessage mTextMessage) {
+
+        long timestamp = mTextMessage.getTimestamp();
+
+        TimePeriod period = CalandarHelper.INSTANCE.howOld(timestamp);
+
+        if(period.equals(TimePeriod.WEEK)) {
+            return new WeekDecorator(mTextMessage);
+        }
+        else if(period.equals(TimePeriod.MONTH)) {
+            return new MonthDecorator(mTextMessage);
+        }
+        else if(period.equals(TimePeriod.YEAR)) {
+            return new YearDecorator(mTextMessage);
+        }
+        else{
+            return new AllTimeDecorator(mTextMessage);
+        }
+    }
+
 }

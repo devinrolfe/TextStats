@@ -36,8 +36,10 @@ public class ContactInfoHolder {
     public String getId() { return this.raw_contact_id; }
     public String getPrimaryPhoneNumber() { return this.primaryPhoneNumber; }
     public String getName() { return this.name; }
-    public int getTextReceived() { return this.textReceived; }
-    public int getTextSent() { return this.textSent; }
+    public int getTextReceivedCount() { return this.textReceived; }
+    public ArrayList getReceivedMessages() { return this.receivedMessages; }
+    public int getTextSentCount() { return this.textSent; }
+    public ArrayList getSentMessages() { return this.sentMessages; }
 
     public void addTextMessage(TextMessage msg) {
 
@@ -50,19 +52,5 @@ public class ContactInfoHolder {
             textReceived++;
         }
     }
-
-    public void print() {
-        System.out.println("-------------------------------------");
-        System.out.println("Name: " + name);
-        System.out.println("Primary#: " + primaryPhoneNumber);
-        for(int i = 1; i<otherPhoneNumbers.size(); i++){
-            System.out.println("other#: " + otherPhoneNumbers.get(i));
-        }
-        System.out.println("ID: " + raw_contact_id);
-        System.out.println("Sent: " + textSent);
-        System.out.println("Recieved: " + textReceived);
-        System.out.println("-------------------------------------");
-    }
-
 
 }
