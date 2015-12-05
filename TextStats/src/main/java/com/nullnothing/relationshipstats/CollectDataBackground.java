@@ -21,20 +21,6 @@ public class CollectDataBackground extends IntentService {
         int status;
         switch (dataString) {
             case "InitialCollectionSetup":
-//                Uri uriSMSURI = Uri.parse("content://sms/inbox");
-//                Cursor cur = getContentResolver().query(uriSMSURI, null, null, null, null);
-//                int counter = 0;
-//                ArrayList<String> textMessages = new ArrayList<String>();
-//                while (cur != null && counter < 100) {
-//                    if (cur.moveToNext()) {
-//                        textMessages.add("From :" + cur.getString(2) + " : " +
-//                                cur.getString(cur.getColumnIndex("body")) + "\nid: " +
-//                                cur.getString(cur.getColumnIndex(Telephony.TextBasedSmsColumns.PERSON)));
-//                    }
-//                    counter++;
-//                }
-//                if(cur != null) cur.close();
-
                 getAllContacts();
                 collectTextMessages();
 
@@ -46,7 +32,6 @@ public class CollectDataBackground extends IntentService {
             default:
                 break;
         }
-
     }
 
     public void getAllContacts() {

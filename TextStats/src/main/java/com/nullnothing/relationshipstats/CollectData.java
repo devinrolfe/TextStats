@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
 import android.provider.Telephony;
 
 import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
+import com.nullnothing.relationshipstats.TextMessageDecorator.DayDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.MonthDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.WeekDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.YearDecorator;
@@ -191,7 +192,10 @@ public class CollectData {
 
         TimePeriod period = CalandarHelper.INSTANCE.howOld(timestamp);
 
-        if(period.equals(TimePeriod.WEEK)) {
+        if(period.equals(TimePeriod.DAY)) {
+            return new DayDecorator(mTextMessage);
+        }
+        else if(period.equals(TimePeriod.WEEK)) {
             return new WeekDecorator(mTextMessage);
         }
         else if(period.equals(TimePeriod.MONTH)) {
