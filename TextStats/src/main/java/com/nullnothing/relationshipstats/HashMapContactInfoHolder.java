@@ -30,7 +30,7 @@ public class HashMapContactInfoHolder {
         }
 
         public void setValue(TextMessage value) {
-            this.value.addTextMessage(value);
+            this.value.addTextMessage(value, value.getPeriod());
         }
 
         public String getKey() {

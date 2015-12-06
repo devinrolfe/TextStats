@@ -1,6 +1,8 @@
 package com.nullnothing.relationshipstats;
 
 
+import com.nullnothing.relationshipstats.Enums.TimePeriod;
+
 public abstract class TextMessage {
 
     private long timestamp;

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 
+import com.nullnothing.relationshipstats.Enums.TimePeriod;
 import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.DayDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.MonthDecorator;

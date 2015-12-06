@@ -18,6 +18,9 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
+import com.nullnothing.relationshipstats.Enums.Category;
+import com.nullnothing.relationshipstats.Enums.TimePeriod;
 
 import java.util.ArrayList;
 
@@ -90,32 +93,22 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void initialSetup() {
-
-        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
-
-
-        ContactInfoHolder lukeContact = mMainInfoHolder.getContacts().get("49").getValue();
-
-        ArrayList receivedMessages = lukeContact.getReceivedMessages();
-        ArrayList sentMessages = lukeContact.getSentMessages();
-
         /*
         TODO : Need to do stuff with messages, should display top 10 received contacts first
         I think is best option
          */
 
-        /*
-        TODO : Use CalandarHelper class to help with which messages we should be capturing
-         */
+        // TODO: THIS NEEDS TO BE TESTED, dont know if will work did not compile :(
+        ContactLinkedList contactLinkedList =
+                DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.MONTH);
+
+        //graph contactLinkedList now??
 
 
-//        ReceivedMessage mReceived = (ReceivedMessage)receivedMessages.get(0);
-//        SentMessage mSent = (SentMessage)sentMessages.get(0);
 
 
-//        Calendar cal = Calendar.getInstance();
-//        cal.setTimeInMillis(mReceived.getTimestamp());
-//        cal.get(Calendar.YEAR);
+
+
 
 
 

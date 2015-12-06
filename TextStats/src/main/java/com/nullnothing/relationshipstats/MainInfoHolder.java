@@ -25,6 +25,7 @@ public class MainInfoHolder {
     }
 
     public  HashMapContactInfoHolder getContacts() { return contactMap; }
+    public ArrayList getContactList() { return contactList; }
 
     /**
      * Method adds contact information, will overwrite previous contact infomation if it exists
@@ -32,7 +33,7 @@ public class MainInfoHolder {
     public void addContact(ContactInfoHolder contactInfoHolder) {
         if(this.contactMap.get(contactInfoHolder.getId()) == null) { //make sure not to overwrite previous contact
             this.contactMap.put(contactInfoHolder.getId(), contactInfoHolder);
-            this.contactList.add(contactInfoHolder.getName());
+            this.contactList.add(contactInfoHolder.getId());
         }
     }
 
