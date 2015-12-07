@@ -7,6 +7,7 @@ import com.nullnothing.relationshipstats.Enums.TimePeriod;
 public class ContactLinkedList {
 
     private ContactNode head;
+    private ContactNode end;
     private int size;
     private Category category;
     private TimePeriod timePeriod;
@@ -17,40 +18,64 @@ public class ContactLinkedList {
 
     public ContactLinkedList(int size, Category category, TimePeriod timePeriod) {
         this.size = size;
+        this.category = category;
+        this.timePeriod = timePeriod;
     }
 
     public ContactNode getHead() { return head; }
 
+    public int getEndValue() {
+        if (end == null) {
+            return -1;
+        }
+        return end.getData().getTextCount(category, timePeriod);
+    }
 
+    // TODO : NEED TO BE REWORKED
     public void add(ContactNode node) {
 
-        if (head == null) {
+        if(head == null) {
             head = node;
+            end = node;
         }
+        else {
+            ContactNode cur = head;
+            ContactNode prev = null;
+            boolean inserted = false;
 
-        int count = 0;
-        boolean inserted = false;
-        ContactNode current = head;
-        ContactNode prev = null;
+            while(cur != null) {
+                if(cur.getData().getTextCount(category, timePeriod) <= node.getData().getTextCount(category, timePeriod)) {
+                    inserted = true;
 
-        for (count = 0; count < size; count++) {
-            if (node.getData().getTextCount(category, timePeriod) > current.getData().getTextCount(category, timePeriod)) {
-                prev.next = node;
-                node.next = current;
-                inserted = true;
+                    if(cur == head) {
+                        head = node;
+                        prev = head;
+                        node.next = cur;
+                        end = cur;
+                    }
+                    else{
+                        prev.next = node;
+                        node.next = cur;
+                    }
+                    break;
+                }
+                prev = cur;
+                cur = cur.next;
             }
-            prev = current;
-            current = current.next;
+
+            while(cur != null) {
+                cur = cur.next;
+                prev = prev.next;
+            }
+
+            if(!inserted) {
+                prev.next = node;
+                end = node;
+            }
+
         }
 
-        // Check if size of list is not over size, if it is then remove last element
-        while(count < size && current != null) {
-            prev = current;
-            current = current.next;
-            count++;
-        }
-        if (inserted && count >= (size - 1)) {
-            prev.next = null;
-        }
+
+
     }
 }

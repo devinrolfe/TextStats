@@ -13,6 +13,8 @@ public abstract class MessageDecorator extends TextMessage {
 
     public abstract TimePeriod getPeriod();
 
+    public TextMessage getTextMessage(){ return textMessage; }
+
     @Override
     public String getMessage() { return textMessage.getMessage(); }
 

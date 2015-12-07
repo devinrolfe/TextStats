@@ -22,8 +22,7 @@ public class DataParserUtil {
 
 
         result  = new ContactLinkedList(top, category, timePeriod);
-        int minValue = -1;
-        int count = 1;
+        int count = 0;
 
         MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
         List<String> contactList = mMainInfoHolder.getContactList();
@@ -37,10 +36,10 @@ public class DataParserUtil {
 
             int value = getValue(contact, category, timePeriod);
 
-            if(value > minValue && count < top) {
+            // TODO : This doesnt make sense below
+            if(value > result.getEndValue() || count < top) {
                 addContactToList(contact);
                 count++;
-                minValue = value;
             }
         }
         return result;

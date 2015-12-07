@@ -3,6 +3,7 @@ package com.nullnothing.relationshipstats;
 
 import com.nullnothing.relationshipstats.Enums.Category;
 import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.TextMessageDecorator.MessageDecorator;
 
 import java.util.ArrayList;
 
@@ -12,8 +13,8 @@ public class ContactInfoHolder {
     private String primaryPhoneNumber;
     private ArrayList<String> otherPhoneNumbers;
     private String raw_contact_id;
-    private ArrayList<SentMessage> sentMessages;
-    private ArrayList<ReceivedMessage> receivedMessages;
+    private ArrayList<TextMessage> sentMessages;
+    private ArrayList<TextMessage> receivedMessages;
 
     private int allTextReceived = 0;
     private int dayTextReceived = 0;
@@ -41,8 +42,8 @@ public class ContactInfoHolder {
         }
         this.raw_contact_id = raw_contact_id;
 
-        sentMessages = new ArrayList<SentMessage>();
-        receivedMessages = new ArrayList<ReceivedMessage>();
+        sentMessages = new ArrayList<TextMessage>();
+        receivedMessages = new ArrayList<TextMessage>();
     }
 
     public String getId() { return this.raw_contact_id; }
@@ -118,8 +119,8 @@ public class ContactInfoHolder {
 
     public void addTextMessage(TextMessage msg, TimePeriod timePeriod) {
 
-        if (msg instanceof SentMessage) {
-            sentMessages.add((SentMessage)msg);
+        if (((MessageDecorator)msg).getTextMessage() instanceof SentMessage) {
+            sentMessages.add(msg);
 
             switch (timePeriod) {
                 case DAY:
@@ -135,8 +136,8 @@ public class ContactInfoHolder {
                     break;
             }
         }
-        else if (msg instanceof ReceivedMessage) {
-            receivedMessages.add((ReceivedMessage)msg);
+        else if (((MessageDecorator)msg).getTextMessage() instanceof ReceivedMessage) {
+            receivedMessages.add(msg);
 
             switch (timePeriod) {
                 case DAY:

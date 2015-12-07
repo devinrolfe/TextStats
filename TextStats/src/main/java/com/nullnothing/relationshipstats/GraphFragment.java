@@ -23,6 +23,7 @@ import com.nullnothing.relationshipstats.Enums.Category;
 import com.nullnothing.relationshipstats.Enums.TimePeriod;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GraphFragment extends Fragment implements FragmentInterface {
@@ -98,9 +99,13 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         I think is best option
          */
 
+        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
+        List<String> contactList = mMainInfoHolder.getContactList();
+        HashMapContactInfoHolder contacts = mMainInfoHolder.getContacts();
+
         // TODO: THIS NEEDS TO BE TESTED, dont know if will work did not compile :(
         ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.MONTH);
+                DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.ALL_TIME);
 
         //graph contactLinkedList now??
 
