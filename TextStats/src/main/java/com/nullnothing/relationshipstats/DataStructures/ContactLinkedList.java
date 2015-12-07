@@ -42,8 +42,10 @@ public class ContactLinkedList {
             ContactNode cur = head;
             ContactNode prev = null;
             boolean inserted = false;
+            int count = 0;
 
             while(cur != null) {
+                count++;
                 if(cur.getData().getTextCount(category, timePeriod) <= node.getData().getTextCount(category, timePeriod)) {
                     inserted = true;
 
@@ -64,9 +66,15 @@ public class ContactLinkedList {
             }
 
             while(cur != null) {
+                count++;
+                if(count >= size) {
+                    cur.next = null;
+                    break;
+                }
+                prev = cur;
                 cur = cur.next;
-                prev = prev.next;
             }
+            end = prev;
 
             if(!inserted) {
                 prev.next = node;
