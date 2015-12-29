@@ -6,14 +6,15 @@ public enum CalandarHelper {
     INSTANCE;
 
     private Calendar cal = Calendar.getInstance();
-    private long currentTime;
 
+    private long currentTime;
     private long dayAgo;
     private long weekAgo;
     private long monthAgo;
     private long yearAgo;
     {
         cal.setTimeInMillis(System.currentTimeMillis());
+        currentTime = cal.getTimeInMillis();
 
         cal.add(Calendar.DATE, -1);
         dayAgo = cal.getTimeInMillis();
@@ -30,6 +31,7 @@ public enum CalandarHelper {
         cal.add(Calendar.YEAR, -1);
         yearAgo = cal.getTimeInMillis();
         cal.add(Calendar.YEAR, 1);
+
     }
 
     public TimePeriod howOld(long timestamp) {
@@ -50,4 +52,5 @@ public enum CalandarHelper {
         }
     }
 
+    public long getCurrentTime() { return currentTime; }
 }
