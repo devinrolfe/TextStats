@@ -1,6 +1,4 @@
-package com.nullnothing.relationshipstats;
-
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+package com.nullnothing.relationshipstats.EnumsOrConstants;
 
 import java.util.Calendar;
 

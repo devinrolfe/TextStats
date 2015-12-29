@@ -1,7 +1,9 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.Threads;
 
 import android.net.Uri;
 import android.util.Log;
+
+import com.nullnothing.relationshipstats.BackgroundProcessing.CollectData;
 
 public class InboxThread implements Runnable {
 

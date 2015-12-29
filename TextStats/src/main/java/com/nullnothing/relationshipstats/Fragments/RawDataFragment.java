@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.Fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.nullnothing.relationshipstats.R;
 
 
 // In this case, the fragment displays simple text based on the page

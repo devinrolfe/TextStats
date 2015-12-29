@@ -1,17 +1,19 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.DataStorageObjects;
 
+
+import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
 
 public class HashMapContactInfoHolder {
 
-    private static int SIZE;
-    private Entry table[];
+    public static int SIZE;
+    public Entry table[];
 
     public HashMapContactInfoHolder(int size){
         SIZE = size;
         table = new Entry[SIZE*2];
     }
 
-    class Entry {
+    public class Entry {
         private final String key;
         private ContactInfoHolder value;
         Entry next;

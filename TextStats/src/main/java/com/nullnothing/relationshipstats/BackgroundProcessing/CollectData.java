@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.BackgroundProcessing;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -6,12 +6,18 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.EnumsOrConstants.CalandarHelper;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.DayDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.MonthDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.WeekDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.YearDecorator;
+import com.nullnothing.relationshipstats.TextMessageObjects.ReceivedMessage;
+import com.nullnothing.relationshipstats.TextMessageObjects.SentMessage;
+import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

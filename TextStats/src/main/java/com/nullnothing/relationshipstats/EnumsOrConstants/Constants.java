@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.EnumsOrConstants;
 
 public final class Constants {
 

@@ -1,6 +1,6 @@
 package com.nullnothing.relationshipstats.DataStructures;
 
-import com.nullnothing.relationshipstats.ContactInfoHolder;
+import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
 
 public class ContactNode {
 

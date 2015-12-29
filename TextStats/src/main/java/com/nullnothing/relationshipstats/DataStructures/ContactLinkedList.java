@@ -1,8 +1,8 @@
 package com.nullnothing.relationshipstats.DataStructures;
 
 
-import com.nullnothing.relationshipstats.Enums.Category;
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
 public class ContactLinkedList {
 

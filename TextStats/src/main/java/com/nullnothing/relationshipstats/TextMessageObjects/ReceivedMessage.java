@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.TextMessageObjects;
 
 public class ReceivedMessage extends TextMessage {
 

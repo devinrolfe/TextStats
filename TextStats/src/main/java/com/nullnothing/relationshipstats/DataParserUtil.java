@@ -1,9 +1,12 @@
 package com.nullnothing.relationshipstats;
 
+import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHolder;
+import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
 import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.Enums.Category;
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
 import java.util.List;
 
@@ -55,5 +58,4 @@ public class DataParserUtil {
     private static void addContactToList(ContactInfoHolder contact) {
         result.add(new ContactNode(contact));
     }
-
 }

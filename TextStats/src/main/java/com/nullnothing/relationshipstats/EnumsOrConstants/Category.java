@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.Enums;
+package com.nullnothing.relationshipstats.EnumsOrConstants;
 
 public enum Category {
 

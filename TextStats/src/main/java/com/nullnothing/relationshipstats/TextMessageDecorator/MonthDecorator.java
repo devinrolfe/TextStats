@@ -1,7 +1,7 @@
 package com.nullnothing.relationshipstats.TextMessageDecorator;
 
-import com.nullnothing.relationshipstats.TextMessage;
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
 public class MonthDecorator extends MessageDecorator {
 

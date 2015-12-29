@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme" >
 
         <service
-            android:name=".CollectDataBackground"
+            android:name=".BackgroundProcessing.CollectDataBackground"
             android:exported="false"/>
 
         <activity

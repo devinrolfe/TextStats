@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.Fragments;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,9 +18,13 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.nullnothing.relationshipstats.DataParserUtil;
 import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
-import com.nullnothing.relationshipstats.Enums.Category;
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHolder;
+import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +107,16 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         List<String> contactList = mMainInfoHolder.getContactList();
         HashMapContactInfoHolder contacts = mMainInfoHolder.getContacts();
 
-        // TODO: THIS NEEDS TO BE TESTED, dont know if will work did not compile :(
         ContactLinkedList contactLinkedList =
                 DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.ALL_TIME);
 
         //graph contactLinkedList now??
+
+
+        /*
+         TODO: Need to parse the data into data points depending on time period and time seperator.
+         Then we need to graph that information.
+          */
 
 
 

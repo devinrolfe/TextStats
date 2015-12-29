@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.Fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

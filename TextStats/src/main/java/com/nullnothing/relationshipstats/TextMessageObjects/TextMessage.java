@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.TextMessageObjects;
 
 
-import com.nullnothing.relationshipstats.Enums.TimePeriod;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
 import java.util.Calendar;
 

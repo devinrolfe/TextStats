@@ -18,6 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nullnothing.relationshipstats.BackgroundProcessing.CollectDataBackground;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.Fragments.FragmentInterface;
+import com.nullnothing.relationshipstats.Fragments.RawDataFragment;
+import com.nullnothing.relationshipstats.Fragments.TextStatsFragmentPagerAdapter;
+
 import java.util.ArrayList;
 
 public class TextStatsActivity extends AppCompatActivity

@@ -1,12 +1,14 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.DataStorageObjects;
 
+
+import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
 
 import java.util.ArrayList;
 
 public class MainInfoHolder {
 
     private static MainInfoHolder holder;
-    static int contactCount = 0;
+    public static int contactCount = 0;
 
     //private HashMap<String, ContactInfoHolder> contactMap =
     private HashMapContactInfoHolder contactMap = new HashMapContactInfoHolder(contactCount);

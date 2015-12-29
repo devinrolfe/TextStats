@@ -1,8 +1,14 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.BackgroundProcessing;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
+
+import com.nullnothing.relationshipstats.BroadcastNotifier;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.TextStatsActivity;
+import com.nullnothing.relationshipstats.Threads.InboxThread;
+import com.nullnothing.relationshipstats.Threads.SentThread;
 
 
 public class CollectDataBackground extends IntentService {
