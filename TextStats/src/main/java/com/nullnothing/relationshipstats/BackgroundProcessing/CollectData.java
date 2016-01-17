@@ -8,7 +8,8 @@ import android.provider.Telephony;
 
 import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
 import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
-import com.nullnothing.relationshipstats.EnumsOrConstants.CalandarHelper;
+import com.nullnothing.relationshipstats.EnumsOrConstants.CalendarHelper;
+import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
 import com.nullnothing.relationshipstats.TextMessageDecorator.DayDecorator;
@@ -102,7 +103,7 @@ public class CollectData {
         String id;
         String from;
         String message;
-        long timestamp;
+        long timestamp = -1;
         TextMessage msg;
 
         for(int whichRun=0; whichRun < 2; whichRun++) {
@@ -130,11 +131,7 @@ public class CollectData {
                         break;
                     case 1: // second run to properly add
                         msg = isASent ? new SentMessage(timestamp, message) : new ReceivedMessage(timestamp, message);
-
-                        // TODO : Decorate with proper Time Period
                         msg = decorateMessage(msg);
-
-
                         if (from != null) {
                             if (id == null) {
                                 id = fromToId.get(from);
@@ -148,6 +145,10 @@ public class CollectData {
                         break;
                 }
             }
+            // To get timestamp of first message, will be used for x-value when graphing
+            if (isASent) Constants.lastSentTimestamp = timestamp;
+            else Constants.lastReceivedTimestamp = timestamp;
+
             if(cur != null) cur.close();
         }
     }
@@ -197,7 +198,7 @@ public class CollectData {
 
         long timestamp = mTextMessage.getTimestamp();
 
-        TimePeriod period = CalandarHelper.INSTANCE.howOld(timestamp);
+        TimePeriod period = CalendarHelper.INSTANCE.howOld(timestamp);
 
         if(period.equals(TimePeriod.DAY)) {
             return new DayDecorator(mTextMessage);

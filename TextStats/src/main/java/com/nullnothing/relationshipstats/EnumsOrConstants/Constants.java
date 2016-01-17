@@ -21,4 +21,7 @@ public final class Constants {
     public static final int STATE_ACTION_COMPLETE = 4;
     // The background thread is doing logging
     public static final int STATE_LOG = -1;
+
+    public static long lastReceivedTimestamp;
+    public static long lastSentTimestamp;
 }

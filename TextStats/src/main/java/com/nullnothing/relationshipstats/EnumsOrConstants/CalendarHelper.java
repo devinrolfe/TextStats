@@ -2,7 +2,7 @@ package com.nullnothing.relationshipstats.EnumsOrConstants;
 
 import java.util.Calendar;
 
-public enum CalandarHelper {
+public enum CalendarHelper {
     INSTANCE;
 
     private Calendar cal = Calendar.getInstance();

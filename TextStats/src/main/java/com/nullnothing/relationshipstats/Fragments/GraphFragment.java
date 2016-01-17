@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nullnothing.relationshipstats.DataParserUtil;
+import com.nullnothing.relationshipstats.DataPoint;
 import com.nullnothing.relationshipstats.DataPointCollection;
 import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHolder;
 import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
@@ -110,17 +111,15 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         HashMapContactInfoHolder contacts = mMainInfoHolder.getContacts();
 
         ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.ALL_TIME);
+                DataParserUtil.getTopContactsInCategory(10, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
 
         //graph contactLinkedList now??
 
 
-        /*
-         TODO: Need to parse the data into data points depending on time period and time seperator.
-         Then we need to graph that information.
-          */
-        DataPointCollection.getXValues(TimeInterval.WEEK);
+        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.DAY, TimePeriod.ALL_TIME, Category.RECEIVEDMSG);
 
+        // TODO: Need to iterate through contactLinkedList and create dataPoints for each contact,
+        //and then add up the messages that fit in the Decoractor TimeFrame
 
 
 
