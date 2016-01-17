@@ -1,22 +1,28 @@
 package com.nullnothing.relationshipstats.EnumsOrConstants;
 
-public enum TimePeriod {
+public enum TimeInterval {
 
+    MINUTE("minute"),
+    HOUR("hour"),
     DAY("day"),
     WEEK("week"),
     MONTH("month"),
-    YEAR("year"),
-    ALL_TIME("all time")
+    YEAR("year")
     ;
 
-
-    private final String period;
+    private final String dataInterval;
     private int rank;
 
-    private TimePeriod(final String period) {
-        this.period = period;
+    private TimeInterval(final String dataInterval) {
+        this.dataInterval = dataInterval;
 
-        switch(period) {
+        switch(dataInterval) {
+            case "minute":
+                rank = 1;
+                break;
+            case "hour":
+                rank = 2;
+                break;
             case "week":
                 rank = 3;
                 break;
@@ -37,9 +43,8 @@ public enum TimePeriod {
 
     @Override
     public String toString() {
-        return period;
+        return dataInterval;
     }
-
     public int getRank() { return rank; }
 
 }

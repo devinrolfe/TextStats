@@ -24,8 +24,8 @@ import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHo
 import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
 import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimeSeperator;
 import com.nullnothing.relationshipstats.R;
 
 import java.util.ArrayList;
@@ -119,11 +119,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
          TODO: Need to parse the data into data points depending on time period and time seperator.
          Then we need to graph that information.
           */
-        DataPointCollection.getXValues(TimePeriod.ALL_TIME, TimeSeperator.WEEK);
-
-
-
-
+        DataPointCollection.getXValues(TimeInterval.WEEK);
 
 
 

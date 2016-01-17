@@ -39,7 +39,6 @@ public class DataParserUtil {
 
             int value = getValue(contact, category, timePeriod);
 
-            // TODO : This doesnt make sense below
             if(value > result.getEndValue() || count < top) {
                 addContactToList(contact);
                 count++;
