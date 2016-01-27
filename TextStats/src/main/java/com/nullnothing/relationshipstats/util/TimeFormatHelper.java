@@ -17,7 +17,7 @@ public class TimeFormatHelper {
         return getTimeFormat(date, interval);
     }
 
-    public static String getTimeFormat(Date date, TimeInterval interval) {
+    private static String getTimeFormat(Date date, TimeInterval interval) {
         int intervalRank = interval.getRank();
 
         if(intervalRank == TimeInterval.MINUTE.getRank()) {

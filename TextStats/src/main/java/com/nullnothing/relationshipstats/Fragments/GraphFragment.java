@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,17 +111,27 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         List<String> contactList = mMainInfoHolder.getContactList();
         HashMapContactInfoHolder contacts = mMainInfoHolder.getContacts();
 
+        // TODO : Everything that happens between time logging should go in its own method,
+        // since this bit of code will be called a lot of times when changing settings
+        long startTime = System.currentTimeMillis();
+        Log.d("Graph Initial Setup", "START " + startTime);
+
         ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(10, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
+                DataParserUtil.getTopContactsInCategory(10, Category.SENTMSG, TimePeriod.ALL_TIME);
 
-        //graph contactLinkedList now??
+        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTMSG);
+        contactLinkedList.setXValues(xValueList);
+
+        DataPointCollection.setYValues(contactLinkedList, xValueList, TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTMSG);
+
+        Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
 
 
-        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.DAY, TimePeriod.ALL_TIME, Category.RECEIVEDMSG);
-
-        // TODO: Need to iterate through contactLinkedList and create dataPoints for each contact,
-        //and then add up the messages that fit in the Decoractor TimeFrame
-
+        // TODO : All the yValues are collected for each contact in contactlistList
+        // 1. Need to now collect the info into datasets line w.e and graph them
+        // Problems could arise
+        // 1. What Colours to use????
+        // 2. When graphing both sent and received how should we connect them? maybe dotted vs solid?
 
 
 

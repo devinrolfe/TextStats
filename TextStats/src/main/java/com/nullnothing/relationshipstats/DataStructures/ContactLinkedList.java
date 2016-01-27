@@ -4,6 +4,10 @@ package com.nullnothing.relationshipstats.DataStructures;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ContactLinkedList {
 
     private ContactNode head;
@@ -11,6 +15,9 @@ public class ContactLinkedList {
     private int size;
     private Category category;
     private TimePeriod timePeriod;
+
+    private List<String> xValues;
+    private Map<String, ContactNode> quickAccessMap = new DefaultHashMap<>(null); // rawID -> ContactNode
 
     private ContactLinkedList() {
         throw new AssertionError();
@@ -22,6 +29,9 @@ public class ContactLinkedList {
         this.timePeriod = timePeriod;
     }
 
+    public void setXValues(List<String> xValuesList) { xValues = xValuesList; }
+    public List getXValues() { return xValues; }
+
     public ContactNode getHead() { return head; }
 
     public int getEndValue() {
@@ -31,9 +41,12 @@ public class ContactLinkedList {
         return end.getData().getTextCount(category, timePeriod);
     }
 
-    // TODO : NEED TO BE REWORKED
+    // Only used when first initializing so that size limit is not violated.
     public void add(ContactNode node) {
+        add(node, false);
+    }
 
+    public void add(ContactNode node, boolean allowSizeViolation) {
         if(head == null) {
             head = node;
             end = node;
@@ -48,6 +61,8 @@ public class ContactLinkedList {
                 count++;
                 if(cur.getData().getTextCount(category, timePeriod) <= node.getData().getTextCount(category, timePeriod)) {
                     inserted = true;
+
+                    quickAccessMap.put(node.getData().getId(),node);
 
                     if(cur == head) {
                         head = node;
@@ -65,25 +80,31 @@ public class ContactLinkedList {
                 cur = cur.next;
             }
 
-            while(cur != null) {
-                count++;
-                if(count >= size) {
-                    cur.next = null;
-                    break;
+            if (!allowSizeViolation) {
+                while (cur != null) {
+                    count++;
+                    if (count >= size) {
+                        if(cur.next != null) quickAccessMap.put(cur.next.getData().getId(), null); // erase from cache
+                        cur.next = null;
+                        break;
+                    }
+                    prev = cur;
+                    cur = cur.next;
                 }
-                prev = cur;
-                cur = cur.next;
             }
+
             end = prev;
 
             if(!inserted) {
                 prev.next = node;
                 end = node;
+                quickAccessMap.put(node.getData().getId(),node);
             }
 
         }
 
-
-
     }
+
+
+
 }
