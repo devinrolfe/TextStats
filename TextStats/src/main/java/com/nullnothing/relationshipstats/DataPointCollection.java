@@ -9,6 +9,8 @@ import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.TextMessageDecorator.MessageDecorator;
+import com.nullnothing.relationshipstats.Threads.DataPointThread;
+import com.nullnothing.relationshipstats.Threads.InboxThread;
 import com.nullnothing.relationshipstats.util.TimeFormatHelper;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,29 +113,22 @@ public class DataPointCollection {
     public static void setYValues(ContactLinkedList contactLinkedList, List<String> xValueList, TimeInterval interval, TimePeriod period, Category category) {
         ContactNode node = contactLinkedList.getHead();
 
+        List<Thread> threads = new ArrayList();
+
         while (node != null) {
-            if(category == Category.SENTANDRECEIVEDMSG || category == Category.SENTMSG) {
-                node.setSentYValues(setYValuesHelper(node, interval, period, true));
-            }
-            if(category == Category.SENTANDRECEIVEDMSG || category == Category.RECEIVEDMSG) {
-                node.setReceivedYValues(setYValuesHelper(node, interval, period, false));
-            }
-             node = node.next;
+            Thread thread = new Thread(new DataPointThread(node, interval, period, category));
+            threads.add(thread);
+            thread.start();
+            node = node.next;
         }
-    }
 
-    private static DefaultHashMap setYValuesHelper(ContactNode node, TimeInterval interval, TimePeriod period, boolean isSent) {
-        Map<String, Integer> yValues = new DefaultHashMap<>(0);
-        for( Object textMessage : isSent ? node.getData().getSentMessages() : node.getData().getReceivedMessages()) {
-            MessageDecorator msg = (MessageDecorator) textMessage;
+        for (Thread thread: threads) {
+            try {
+                thread.join();
+            } catch(InterruptedException e) {
 
-            if (msg.getPeriod().getRank() <= period.getRank()) {
-                String point = TimeFormatHelper.TimeToDataPoint(msg.getTimestamp(), interval);
-                int pointYValue = yValues.get(point) + 1;
-                yValues.put(point, pointYValue);
             }
         }
-        return (DefaultHashMap) yValues;
     }
 
 }

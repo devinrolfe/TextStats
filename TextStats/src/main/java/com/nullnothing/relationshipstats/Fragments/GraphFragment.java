@@ -117,12 +117,12 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         Log.d("Graph Initial Setup", "START " + startTime);
 
         ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(10, Category.SENTMSG, TimePeriod.ALL_TIME);
+                DataParserUtil.getTopContactsInCategory(10, Category.SENTANDRECEIVEDMSG, TimePeriod.ALL_TIME);
 
-        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTMSG);
+        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTANDRECEIVEDMSG);
         contactLinkedList.setXValues(xValueList);
 
-        DataPointCollection.setYValues(contactLinkedList, xValueList, TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTMSG);
+        DataPointCollection.setYValues(contactLinkedList, xValueList, TimeInterval.DAY, TimePeriod.ALL_TIME, Category.SENTANDRECEIVEDMSG);
 
         Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
 
