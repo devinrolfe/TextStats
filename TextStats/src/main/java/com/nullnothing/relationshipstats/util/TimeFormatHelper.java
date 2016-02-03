@@ -21,25 +21,25 @@ public class TimeFormatHelper {
         int intervalRank = interval.getRank();
 
         if(intervalRank == TimeInterval.MINUTE.getRank()) {
-            return new SimpleDateFormat("h:mm a MMMM/dd/yyyy").format(date);
+            return new SimpleDateFormat("h:mm a MM/dd/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.HOUR.getRank()) {
-            return new SimpleDateFormat("h a MMMM/dd/yyyy").format(date);
+            return new SimpleDateFormat("h a MM/dd/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.WEEK.getRank()) {
-            return new SimpleDateFormat("Week E, MMMM/dd/yyyy").format(date);
+            return new SimpleDateFormat("Week E, MM/dd/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.DAY.getRank()) {
-            return new SimpleDateFormat("MMMM/dd/yyyy").format(date);
+            return new SimpleDateFormat("MM/dd/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.MONTH.getRank()) {
-            return new SimpleDateFormat("MMMM/yyyy").format(date);
+            return new SimpleDateFormat("MM/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.YEAR.getRank()) {
             return new SimpleDateFormat("yyyy").format(date);
         }
         else{
-            return new SimpleDateFormat("h:mm a MMMM/dd/yyyy").format(date);
+            return new SimpleDateFormat("h:mm a MM/dd/yyyy").format(date);
         }
     }
 }

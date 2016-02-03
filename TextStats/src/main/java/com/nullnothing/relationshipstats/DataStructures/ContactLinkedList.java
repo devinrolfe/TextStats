@@ -29,6 +29,8 @@ public class ContactLinkedList {
         this.timePeriod = timePeriod;
     }
 
+    public Category getCategory() { return category; }
+
     public void setXValues(List<String> xValuesList) { xValues = xValuesList; }
     public List getXValues() { return xValues; }
 
@@ -80,6 +82,8 @@ public class ContactLinkedList {
                 cur = cur.next;
             }
 
+            cur = head;
+            count = 0;
             if (!allowSizeViolation) {
                 while (cur != null) {
                     count++;
