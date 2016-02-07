@@ -126,7 +126,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         Log.d("Graph Initial Setup", "START " + startTime);
         // TODO : BUG WITH END VALUE, Might be best to re write the add function, its a piece of crap
         ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(1, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
+                DataParserUtil.getTopContactsInCategory(15, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
 
         List<String> xValueList = DataPointCollection.getXValues(TimeInterval.MONTH, TimePeriod.ALL_TIME, Category.RECEIVEDMSG);
         contactLinkedList.setXValues(xValueList);

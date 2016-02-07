@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black" type="color">#000000</color>
-    <color name="blue" type="color">#FF33B5E5</color>
-    <color name="purple" type="color">#FFAA66CC</color>
-    <color name="green" type="color">#FF99CC00</color>
-    <color name="orange" type="color">#FFFFBB33</color>
-    <color name="red" type="color">#FFFF4444</color>
-    <color name="darkblue" type="color">#FF0099CC</color>
-    <color name="darkpurple" type="color">#FF9933CC</color>
-    <color name="darkgreen" type="color">#FF669900</color>
-    <color name="darkorange" type="color">#FFFF8800</color>
-    <color name="darkred" type="color">#FFCC0000</color>
+
+    <!-- Normal Colours -->
+    <color name="blue" type="color">#0000ff</color>
+    <color name="purple" type="color">#b266ff</color>
+    <color name="green" type="color">#33cc33</color>
+    <color name="orange" type="color">#ff9900</color>
+    <color name="red" type="color">#ff3300</color>
+    <color name="yellow" type="color">#ffff00</color>
+    <color name="pink" type="color">#ff33cc</color>
+    <color name="brown" type="color">#996633</color>
+    <color name="cyan" type="color">#00ffff</color>
+    <color name="grey" type="color">#808080</color>
+
+    <!-- Dark Colours -->
+    <color name="darkblue" type="color">#000099</color>
+    <color name="darkpurple" type="color">#9833ff</color>
+    <color name="darkgreen" type="color">#1f7a1f</color>
+    <color name="darkorange" type="color">#cc7a00</color>
+    <color name="darkred" type="color">#b32400</color>
+    <color name="darkyellow" type="color">#cbcc00</color>
+    <color name="darkpink" type="color">#cc009a</color>
+    <color name="darkbrown" type="color">#734d26</color>
+    <color name="darkcyan" type="color">#00cccc</color>
+    <color name="darkgrey" type="color">#666666</color>
+
+    <!-- Light Colours -->
+    <color name="lightblue" type="color">#6666ff</color>
+    <color name="lightpurple" type="color">#cc99ff</color>
+    <color name="lightgreen" type="color">#9ae59a</color>
+    <color name="lightorange" type="color">#ffb74d</color>
+    <color name="lightred" type="color">#ff8466</color>
+    <color name="lightyellow" type="color">#feff80</color>
+    <color name="lightpink" type="color">#ff99e6</color>
+    <color name="lightbrown" type="color">#cd9965</color>
+    <color name="lightcyan" type="color">#99ffff</color>
+    <color name="lightgrey" type="color">#cccccc</color>
+
 </resources>

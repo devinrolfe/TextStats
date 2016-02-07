@@ -1,6 +1,7 @@
 package com.nullnothing.relationshipstats.DataStructures;
 
 
+import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 
@@ -44,11 +45,13 @@ public class ContactLinkedList {
     }
 
     // Only used when first initializing so that size limit is not violated.
-    public void add(ContactNode node) {
-        add(node, false);
+    public void add(ContactInfoHolder contact) {
+        add(contact, false);
     }
 
-    public void add(ContactNode node, boolean allowSizeViolation) {
+    public void add(ContactInfoHolder contact, boolean allowSizeViolation) {
+        ContactNode node = new ContactNode(contact);
+
         if(head == null) {
             head = node;
             end = node;
@@ -70,7 +73,7 @@ public class ContactLinkedList {
                         head = node;
                         prev = head;
                         node.next = cur;
-                        end = cur;
+                        if(cur.next == null) end = cur;
                     }
                     else{
                         prev.next = node;
@@ -81,30 +84,31 @@ public class ContactLinkedList {
                 prev = cur;
                 cur = cur.next;
             }
-
-            cur = head;
-            count = 0;
-            if (!allowSizeViolation) {
-                while (cur != null) {
-                    count++;
-                    if (count >= size) {
-                        if(cur.next != null) quickAccessMap.put(cur.next.getData().getId(), null); // erase from cache
-                        cur.next = null;
-                        break;
-                    }
-                    prev = cur;
-                    cur = cur.next;
-                }
-            }
-
-            end = prev;
-
+            // Inserts at end of list
             if(!inserted) {
                 prev.next = node;
                 end = node;
                 quickAccessMap.put(node.getData().getId(),node);
             }
 
+            // Remove last element in list
+            if(!allowSizeViolation && head !=null) {
+                count = 0;
+                node = head;
+                prev = node;
+                while(node.next != null) {
+                    count++;
+                    prev = node;
+                    node = node.next;
+                }
+
+                if(count >= size) {
+                    quickAccessMap.put(node.getData().getId(), null);
+                    node = null;
+                    prev.next = null;
+                    end = prev;
+                }
+            }
         }
 
     }

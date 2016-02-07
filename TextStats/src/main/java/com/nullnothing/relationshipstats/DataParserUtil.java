@@ -55,6 +55,6 @@ public class DataParserUtil {
     }
 
     private static void addContactToList(ContactInfoHolder contact) {
-        result.add(new ContactNode(contact));
+        result.add(contact);
     }
 }
