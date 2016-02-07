@@ -1,5 +1,6 @@
 package com.nullnothing.relationshipstats.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -31,8 +33,10 @@ import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.R;
+import com.nullnothing.relationshipstats.graphing.CustomMarkerView;
 import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +46,21 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     private Context context;
     private LineChart mChart;
     private View view;
+
+    GraphListener mCallback;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (GraphListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement GraphListener");
+        }
+    }
 
     public void setContext(Context context){
         this.context = context;
@@ -61,6 +80,11 @@ public class GraphFragment extends Fragment implements FragmentInterface {
 
         mChart.setNoDataText("Loading text messages...");
         mChart.getPaint(Chart.PAINT_INFO).setColor(Color.BLACK);
+
+        // Custom highlight marker
+        CustomMarkerView mv = new CustomMarkerView(context, R.layout.graph_marker);
+        // set the marker to the chart
+        mChart.setMarkerView(mv);
 
         mChart.setDescription("");
 
@@ -84,10 +108,10 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
 
-        l.setForm(LegendForm.LINE);
+        l.setWordWrapEnabled(true);
+        l.setForm(LegendForm.CIRCLE);
         l.setTypeface(tf);
         l.setTextColor(Color.BLACK);
-
 
         XAxis xl = mChart.getXAxis();
         xl.setTypeface(tf);
@@ -111,133 +135,80 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void initialSetup() {
-        /*
-        TODO : Need to do stuff with messages, should display top 10 received contacts first
-        I think is best option
-         */
-
-        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
-        List<String> contactList = mMainInfoHolder.getContactList();
-        HashMapContactInfoHolder contacts = mMainInfoHolder.getContacts();
-
-        // TODO : Everything that happens between time logging should go in its own method,
-        // since this bit of code will be called a lot of times when changing settings
-        long startTime = System.currentTimeMillis();
-        Log.d("Graph Initial Setup", "START " + startTime);
-        // TODO : BUG WITH END VALUE, Might be best to re write the add function, its a piece of crap
-        ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(15, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
-
-        List<String> xValueList = DataPointCollection.getXValues(TimeInterval.MONTH, TimePeriod.ALL_TIME, Category.RECEIVEDMSG);
-        contactLinkedList.setXValues(xValueList);
-        DataPointCollection.setYValues(contactLinkedList, xValueList, TimeInterval.MONTH, TimePeriod.ALL_TIME, Category.RECEIVEDMSG);
-
-        Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
-
-        List<LineDataSet> dataSets = getDataSets(contactLinkedList);
-
-        setGraphData(xValueList, dataSets);
-
-        // TODO : Delete this mockGraph bullshit
-//         mockGraph();
-
-
+        changeGraph(1, Category.RECEIVEDMSG, TimeInterval.MONTH, TimePeriod.ALL_TIME);
     }
 
-    public List<LineDataSet> getDataSets(ContactLinkedList contactLinkedList) {
+    private List<LineDataSet> getDataSets(ContactLinkedList contactLinkedList) {
         List<LineDataSet> dataSets = new ArrayList<>();
         ContactNode node = contactLinkedList.getHead();
 
         Category category = contactLinkedList.getCategory();
         List<String> xValues = contactLinkedList.getXValues();
 
+        int index = 0;
+        int[] colours = new int[contactLinkedList.getSize()];
+        String[] labels = new String[contactLinkedList.getSize()];
+
         while(node != null) {
             List<LineDataSet> contactDataSets = getDataSet(node, xValues, category);
+
+            colours[index] = contactDataSets.get(0).getColor(0);
+            labels[index] = contactDataSets.get(0).getLabel();
+
             for(LineDataSet mLineDataSet : contactDataSets) {
                 dataSets.add(mLineDataSet);
             }
             node = node.next;
+            index++;
         }
+        mChart.getLegend().setCustom(colours, labels);
+
         return dataSets;
     }
 
-    public List<LineDataSet> getDataSet(ContactNode node, List<String> xValues, Category category) {
+    private List<LineDataSet> getDataSet(ContactNode node, List<String> xValues, Category category) {
         return LineDataSetCreator.getInstance(context).getDataSet(node, xValues, category);
     }
 
-    public void setGraphData(List<String> xVals, List<LineDataSet> mDataSets) {
+    private void setGraphData(List<String> xVals, List<LineDataSet> mDataSets) {
         LineData data = new LineData(xVals, mDataSets);
         mChart.setData(data);
         mChart.notifyDataSetChanged(); // let the chart know it's data changed
         mChart.invalidate();
     }
 
+    public void changeGraph(int numContactToGraph, Category category, TimeInterval interval, TimePeriod period) {
 
+        long startTime = System.currentTimeMillis();
+        Log.d("Graph Initial Setup", "START " + startTime);
 
-    // TODO : Need to redraw graph when removing/adding contact to graph cuz only .setData(LineDataSet)
-    // then notify that datasert has changed
-    public void mockGraph() {
+        ContactLinkedList contactLinkedList =
+                DataParserUtil.getTopContactsInCategory(numContactToGraph, category, period);
 
-        ArrayList xVals = new ArrayList();
+        List<String> xValueList = DataPointCollection.getXValues(interval, period, category);
+        contactLinkedList.setXValues(xValueList);
+        DataPointCollection.setYValues(contactLinkedList, xValueList, interval, period, category);
 
-        for (int i = 0; i < 20; i++) {
-            xVals.add((i) + "");
+        List<LineDataSet> dataSets = getDataSets(contactLinkedList);
+
+        setGraphData(xValueList, dataSets);
+
+        switch (category) {
+            case SENTANDRECEIVEDMSG:
+                mCallback.changeGraphTitle("Text Messages : Received(solid), Sent(dotted)");
+                break;
+            case SENTMSG:
+                mCallback.changeGraphTitle("Text Messages : Sent");
+                break;
+            case RECEIVEDMSG:
+                mCallback.changeGraphTitle("Text Messages : Received");
+                break;
+            default:
+                break;
         }
 
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
-
-        for (int i = 0; i < 20; i++) {
-
-            float mult = (20 + 1);
-            float val = (float) (Math.random() * mult) + 3;// + (float)
-            // ((mult *
-            // 0.1) / 10);
-            yVals.add(new Entry(val, i));
-        }
-
-
-        // create a dataset and give it a type
-        LineDataSet set1 = new LineDataSet(yVals, "DataSet 1");
-        // set1.setFillAlpha(110);
-        // set1.setFillColor(Color.RED);
-        // set the line to be drawn like this "- - - - - -"
-//        set1.enableDashedLine(10f, 5f, 0f);
-//        set1.enableDashedHighlightLine(10f, 5f, 0f);
-
-        set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
-        set1.setLineWidth(1f);
-        set1.setCircleSize(3f);
-        set1.setDrawCircleHole(false);
-        set1.setValueTextSize(9f);
-        set1.setFillAlpha(65);
-        set1.setFillColor(Color.BLACK);
-//        set1.setDrawFilled(true);
-        // set1.setShader(new LinearGradient(0, 0, 0, mChart.getHeight(),
-        // Color.BLACK, Color.WHITE, Shader.TileMode.MIRROR));
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(set1); // add the datasets
-
-
-
-        // DONE making function for below bit
-
-        // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
-
-        // set data
-        mChart.setData(data);
-
-
-        mChart.notifyDataSetChanged(); // let the chart know it's data changed
-        mChart.invalidate();
-
-
-
+        Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
     }
-
-
 
 }
 

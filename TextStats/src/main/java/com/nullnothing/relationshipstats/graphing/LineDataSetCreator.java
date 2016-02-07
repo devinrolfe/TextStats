@@ -55,11 +55,13 @@ public class LineDataSetCreator {
 
         if(category == Category.SENTANDRECEIVEDMSG) {
             mLineDataSet = new LineDataSet(node.getReceivedYValues(xValues), node.getData().getName());
-            mLineDataSet = setDataSetInfo(mLineDataSet, true);
+            mLineDataSet = setDataSetInfo(mLineDataSet, false);
             dataSetList.add(mLineDataSet);
 
+            int colour = mLineDataSet.getColor(0);
+
             mLineDataSet = new LineDataSet(node.getSentYValues(xValues), node.getData().getName());
-            mLineDataSet = setDataSetInfo(mLineDataSet, false);
+            mLineDataSet = setDataSetInfo(mLineDataSet, true, colour);
             dataSetList.add(mLineDataSet);
         }
         else if(category == Category.RECEIVEDMSG) {
@@ -76,9 +78,15 @@ public class LineDataSetCreator {
     }
 
     public LineDataSet setDataSetInfo(LineDataSet mLineDataSet, boolean enableDash) {
+        return setDataSetInfo(mLineDataSet, enableDash, -1);
+    }
 
-        int colour = colours.remove(0);
-        colours.add(colour); //Recycles colours
+    public LineDataSet setDataSetInfo(LineDataSet mLineDataSet, boolean enableDash, int colour) {
+
+        if(!enableDash) {
+            colour = colours.remove(0);
+            colours.add(colour); //Recycles colours
+        }
 
         mLineDataSet.setColor(colour);
         mLineDataSet.setCircleColor(colour);
@@ -88,7 +96,9 @@ public class LineDataSetCreator {
         mLineDataSet.setValueTextSize(9f);
         mLineDataSet.setFillAlpha(65);
         mLineDataSet.setFillColor(colour);
-        mLineDataSet.setHighlightEnabled(false);
+
+        mLineDataSet.setHighlightEnabled(true);
+        mLineDataSet.setHighLightColor(Color.WHITE);
 
         if(enableDash) {
             mLineDataSet.enableDashedLine(10f, 5f, 0f);

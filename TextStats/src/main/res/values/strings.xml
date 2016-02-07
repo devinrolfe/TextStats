@@ -7,5 +7,5 @@
     <!-- String values for Raw data fragment -->
     <string name="raw_button_send">Get Next Text</string>
 
-
+    <string name="graph_button_remove">Remove</string>
 </resources>

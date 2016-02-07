@@ -31,6 +31,7 @@ public class ContactLinkedList {
     }
 
     public Category getCategory() { return category; }
+    public int getSize() { return size; }
 
     public void setXValues(List<String> xValuesList) { xValues = xValuesList; }
     public List getXValues() { return xValues; }

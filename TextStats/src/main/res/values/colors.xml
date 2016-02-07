@@ -9,4 +9,6 @@
     <color name="actionBarBackground">#607D8B</color>
     <color name="actionbar_text">#FFFFFF</color>
 
+    <color name="white">#FFFFFF</color>
+
 </resources>

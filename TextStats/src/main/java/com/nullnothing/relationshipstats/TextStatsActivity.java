@@ -17,17 +17,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.nullnothing.relationshipstats.BackgroundProcessing.CollectDataBackground;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.Fragments.FragmentInterface;
+import com.nullnothing.relationshipstats.Fragments.GraphListener;
 import com.nullnothing.relationshipstats.Fragments.RawDataFragment;
 import com.nullnothing.relationshipstats.Fragments.TextStatsFragmentPagerAdapter;
 
 import java.util.ArrayList;
 
 public class TextStatsActivity extends AppCompatActivity
-        implements RawDataFragment.RawDataSelectedListener {
+        implements RawDataFragment.RawDataSelectedListener, GraphListener {
 
     public static boolean backgroundCollectionDone = false;
 
@@ -126,6 +128,12 @@ public class TextStatsActivity extends AppCompatActivity
 
             rawDataFrag.getNextTextFromActivity(sms);
         }
+    }
+
+    // Set the Title of the Activity to title
+    public void changeGraphTitle(String title) {
+        TextView textView = (TextView) findViewById(R.id.graphTitleId);
+        textView.setText(title);
     }
 
     // Broadcast receiver for receiving status updates from the IntentService
