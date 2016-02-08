@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -19,24 +18,20 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.Legend.LegendForm;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nullnothing.relationshipstats.DataParserUtil;
-import com.nullnothing.relationshipstats.DataPoint;
 import com.nullnothing.relationshipstats.DataPointCollection;
-import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHolder;
-import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
 import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.DataStructures.ContactNode;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.graphing.CustomMarkerView;
 import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +42,8 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     private LineChart mChart;
     private View view;
 
-    GraphListener mCallback;
+    TitleListener mTitleListener;
+    MenuListener mMenuListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -55,12 +51,29 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (GraphListener) activity;
+            mTitleListener = (TitleListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement GraphListener");
+                    + " must implement TitleListener");
         }
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                mMenuListener = (MenuListener) getActivity();
+             } catch (ClassCastException e) {
+                throw new ClassCastException(getActivity().toString()
+                    + " must implement MenuListener");
+        }
+            mMenuListener.changeMenu(FragmentName.GraphFragment);
+        }
+    }
+
+    public FragmentName getName() { return FragmentName.GraphFragment; }
+
 
     public void setContext(Context context){
         this.context = context;
@@ -195,13 +208,13 @@ public class GraphFragment extends Fragment implements FragmentInterface {
 
         switch (category) {
             case SENTANDRECEIVEDMSG:
-                mCallback.changeGraphTitle("Text Messages : Received(solid), Sent(dotted)");
+                mTitleListener.changeTitle("Text Messages : Received(solid), Sent(dotted)");
                 break;
             case SENTMSG:
-                mCallback.changeGraphTitle("Text Messages : Sent");
+                mTitleListener.changeTitle("Text Messages : Sent");
                 break;
             case RECEIVEDMSG:
-                mCallback.changeGraphTitle("Text Messages : Received");
+                mTitleListener.changeTitle("Text Messages : Received");
                 break;
             default:
                 break;

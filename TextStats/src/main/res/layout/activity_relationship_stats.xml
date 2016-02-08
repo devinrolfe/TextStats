@@ -57,6 +57,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@android:color/white"
-        app:menu="@menu/drawer_view" />
+        app:menu="@menu/graph_menu" />
 
 </android.support.v4.widget.DrawerLayout>

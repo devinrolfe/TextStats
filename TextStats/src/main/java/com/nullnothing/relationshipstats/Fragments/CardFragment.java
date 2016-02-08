@@ -1,5 +1,6 @@
 package com.nullnothing.relationshipstats.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,11 +10,14 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.R;
 
 
 // In this case, the fragment displays simple text based on the page
 public class CardFragment extends Fragment implements FragmentInterface {
+
+    MenuListener mMenuListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,7 +30,27 @@ public class CardFragment extends Fragment implements FragmentInterface {
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // TODO should implement TitleListener to change title
+    }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                mMenuListener = (MenuListener) getActivity();
+            } catch (ClassCastException e) {
+                throw new ClassCastException(getActivity().toString()
+                        + " must implement MenuListener");
+            }
+            mMenuListener.changeMenu(FragmentName.CardFragment);
+        }
+    }
+
+    public FragmentName getName() { return FragmentName.CardFragment; }
 
 
     public void initialSetup() {

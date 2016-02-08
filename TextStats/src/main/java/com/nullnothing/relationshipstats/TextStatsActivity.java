@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -21,15 +22,17 @@ import android.widget.TextView;
 
 import com.nullnothing.relationshipstats.BackgroundProcessing.CollectDataBackground;
 import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.Fragments.FragmentInterface;
-import com.nullnothing.relationshipstats.Fragments.GraphListener;
+import com.nullnothing.relationshipstats.Fragments.TitleListener;
+import com.nullnothing.relationshipstats.Fragments.MenuListener;
 import com.nullnothing.relationshipstats.Fragments.RawDataFragment;
 import com.nullnothing.relationshipstats.Fragments.TextStatsFragmentPagerAdapter;
 
 import java.util.ArrayList;
 
 public class TextStatsActivity extends AppCompatActivity
-        implements RawDataFragment.RawDataSelectedListener, GraphListener {
+        implements RawDataFragment.RawDataSelectedListener, TitleListener, MenuListener {
 
     public static boolean backgroundCollectionDone = false;
 
@@ -131,9 +134,23 @@ public class TextStatsActivity extends AppCompatActivity
     }
 
     // Set the Title of the Activity to title
-    public void changeGraphTitle(String title) {
+    public void changeTitle(String title) {
         TextView textView = (TextView) findViewById(R.id.graphTitleId);
         textView.setText(title);
+    }
+
+    public void changeMenu(FragmentName fragmentName) {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
+        navigationView.getMenu().clear(); //clear old inflated items.
+
+        switch (fragmentName) {
+            case GraphFragment:
+                navigationView.inflateMenu(R.menu.graph_menu);
+                break;
+            case CardFragment:
+                navigationView.inflateMenu(R.menu.card_menu);
+                break;
+        }
     }
 
     // Broadcast receiver for receiving status updates from the IntentService

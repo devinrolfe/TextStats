@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.R;
 
 
@@ -44,6 +45,8 @@ public class RawDataFragment extends Fragment {
         textMessageView.setText(this.getTag());
         return view;
     }
+
+    public FragmentName getName() { return FragmentName.RawDataFragment; }
 
     // Get the next text message and display it
     public void getNextTextFromActivity(String message) {
