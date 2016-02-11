@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats.DataStorageObjects;
+package com.nullnothing.relationshipstats.dataStorageObjects;
 
 
-import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
+import com.nullnothing.relationshipstats.textMessageObjects.TextMessage;
 
 import java.util.ArrayList;
 

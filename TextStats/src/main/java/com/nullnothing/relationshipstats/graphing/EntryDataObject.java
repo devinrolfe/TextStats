@@ -1,6 +1,6 @@
 package com.nullnothing.relationshipstats.graphing;
 
-import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
 
 public class EntryDataObject {
 

@@ -1,24 +1,15 @@
 package com.nullnothing.relationshipstats.graphing;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Color;
 
 import com.github.mikephil.charting.data.LineDataSet;
-import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
+import com.nullnothing.relationshipstats.dataStructures.ContactNode;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class LineDataSetCreator {
 

@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.DataStructures;
+package com.nullnothing.relationshipstats.dataStructures;
 
 import java.util.HashMap;
 

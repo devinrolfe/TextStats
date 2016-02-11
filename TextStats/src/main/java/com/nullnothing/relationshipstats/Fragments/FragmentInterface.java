@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats.Fragments;
+package com.nullnothing.relationshipstats.fragments;
 
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
 
 public interface FragmentInterface {
 

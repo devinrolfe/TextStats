@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.Fragments;
+package com.nullnothing.relationshipstats.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.R;
 
 

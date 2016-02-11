@@ -18,25 +18,39 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.nullnothing.relationshipstats.BackgroundProcessing.CollectDataBackground;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
-import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
-import com.nullnothing.relationshipstats.Fragments.FragmentInterface;
-import com.nullnothing.relationshipstats.Fragments.TitleListener;
-import com.nullnothing.relationshipstats.Fragments.MenuListener;
-import com.nullnothing.relationshipstats.Fragments.RawDataFragment;
-import com.nullnothing.relationshipstats.Fragments.TextStatsFragmentPagerAdapter;
+import com.nullnothing.relationshipstats.backgroundProcessing.CollectDataBackground;
+import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.fragments.FragmentInterface;
+import com.nullnothing.relationshipstats.fragments.TitleListener;
+import com.nullnothing.relationshipstats.fragments.MenuListener;
+import com.nullnothing.relationshipstats.fragments.RawDataFragment;
+import com.nullnothing.relationshipstats.fragments.TextStatsFragmentPagerAdapter;
+import com.nullnothing.relationshipstats.navigationMenu.ExpandableListAdapter;
+import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
+import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuChanger;
+import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class TextStatsActivity extends AppCompatActivity
         implements RawDataFragment.RawDataSelectedListener, TitleListener, MenuListener {
 
     public static boolean backgroundCollectionDone = false;
 
-    private DrawerLayout mDrawer;
+//    private DrawerLayout mDrawer;
+    private DrawerLayout mDrawerLayout;
+    ExpandableListAdapter mMenuAdapter;
+    ExpandableListView expandableList;
+//    List<ExpandedMenuModel> listDataHeader;
+//    HashMap<ExpandedMenuModel, List<String>> listDataChild;
+
     private Toolbar toolbar;
     private ViewPager viewPager;
 
@@ -54,7 +68,14 @@ public class TextStatsActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        expandableList = (ExpandableListView) findViewById(R.id.navigationmenu);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
+
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+//        changeNavigationMenu(FragmentName.GraphFragment);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -68,6 +89,39 @@ public class TextStatsActivity extends AppCompatActivity
             we can just have a static boolean value to do thing bit.
         */
         collectData();
+    }
+
+    public void changeNavigationMenu(FragmentName fragmentName) {
+        NavigationMenuHolder navigationMenuHolder = null;
+
+        switch (fragmentName) {
+            case GraphFragment:
+                navigationMenuHolder = NavigationMenuChanger.prepareListDataForGraphFragment();
+                break;
+            case CardFragment:
+                navigationMenuHolder = NavigationMenuChanger.prepareListDataForCardFragment();
+                break;
+            default:
+                throw new IllegalArgumentException();
+        }
+
+//        listDataHeader = navigationMenuHolder.getListDataHeader();
+//        listDataChild = navigationMenuHolder.getListDataChild();
+        mMenuAdapter = new ExpandableListAdapter(this, navigationMenuHolder.getListDataHeader(), navigationMenuHolder.getListDataChild(), expandableList);
+        // setting list adapter
+        expandableList.setAdapter(mMenuAdapter);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    }
+                });
     }
 
     private void collectData() {
@@ -103,19 +157,24 @@ public class TextStatsActivity extends AppCompatActivity
                openAddContact();
                 return true;
             case R.id.action_option:
-                mDrawer.openDrawer(GravityCompat.END);
+                mDrawerLayout.openDrawer(GravityCompat.END);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    // TODO : Remove
     public void openSearch() {
-
     }
-
+    // TODO
     public void openAddContact() {
-
+    }
+    // TODO
+    public void openDeleteContact() {
+    }
+    // TODO
+    public void openClearContact() {
     }
 
     // Get next text message in sms logs
@@ -137,20 +196,6 @@ public class TextStatsActivity extends AppCompatActivity
     public void changeTitle(String title) {
         TextView textView = (TextView) findViewById(R.id.graphTitleId);
         textView.setText(title);
-    }
-
-    public void changeMenu(FragmentName fragmentName) {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nvView);
-        navigationView.getMenu().clear(); //clear old inflated items.
-
-        switch (fragmentName) {
-            case GraphFragment:
-                navigationView.inflateMenu(R.menu.graph_menu);
-                break;
-            case CardFragment:
-                navigationView.inflateMenu(R.menu.card_menu);
-                break;
-        }
     }
 
     // Broadcast receiver for receiving status updates from the IntentService

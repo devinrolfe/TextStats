@@ -1,11 +1,10 @@
-package com.nullnothing.relationshipstats.DataStructures;
+package com.nullnothing.relationshipstats.dataStructures;
 
 
-import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

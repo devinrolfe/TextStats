@@ -1,21 +1,17 @@
 package com.nullnothing.relationshipstats;
 
-import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
-import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.DataStructures.DefaultHashMap;
-import com.nullnothing.relationshipstats.EnumsOrConstants.CalendarHelper;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.TextMessageDecorator.MessageDecorator;
-import com.nullnothing.relationshipstats.Threads.DataPointThread;
-import com.nullnothing.relationshipstats.Threads.InboxThread;
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
+import com.nullnothing.relationshipstats.dataStructures.ContactNode;
+import com.nullnothing.relationshipstats.enumsOrConstants.CalendarHelper;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.threads.DataPointThread;
 import com.nullnothing.relationshipstats.util.TimeFormatHelper;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 public class DataPointCollection {
 

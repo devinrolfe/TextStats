@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats.TextMessageDecorator;
+package com.nullnothing.relationshipstats.textMessageDecorator;
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.textMessageObjects.TextMessage;
 
 public class YearDecorator extends MessageDecorator {
 

@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats.TextMessageObjects;
+package com.nullnothing.relationshipstats.textMessageObjects;
 
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 
 public abstract class TextMessage {
 

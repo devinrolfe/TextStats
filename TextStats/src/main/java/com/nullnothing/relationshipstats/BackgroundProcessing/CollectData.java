@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.BackgroundProcessing;
+package com.nullnothing.relationshipstats.backgroundProcessing;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -6,19 +6,19 @@ import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.Telephony;
 
-import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
-import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
-import com.nullnothing.relationshipstats.EnumsOrConstants.CalendarHelper;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Constants;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.TextMessageDecorator.AllTimeDecorator;
-import com.nullnothing.relationshipstats.TextMessageDecorator.DayDecorator;
-import com.nullnothing.relationshipstats.TextMessageDecorator.MonthDecorator;
-import com.nullnothing.relationshipstats.TextMessageDecorator.WeekDecorator;
-import com.nullnothing.relationshipstats.TextMessageDecorator.YearDecorator;
-import com.nullnothing.relationshipstats.TextMessageObjects.ReceivedMessage;
-import com.nullnothing.relationshipstats.TextMessageObjects.SentMessage;
-import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
+import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.dataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.enumsOrConstants.CalendarHelper;
+import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.textMessageDecorator.AllTimeDecorator;
+import com.nullnothing.relationshipstats.textMessageDecorator.DayDecorator;
+import com.nullnothing.relationshipstats.textMessageDecorator.MonthDecorator;
+import com.nullnothing.relationshipstats.textMessageDecorator.WeekDecorator;
+import com.nullnothing.relationshipstats.textMessageDecorator.YearDecorator;
+import com.nullnothing.relationshipstats.textMessageObjects.ReceivedMessage;
+import com.nullnothing.relationshipstats.textMessageObjects.SentMessage;
+import com.nullnothing.relationshipstats.textMessageObjects.TextMessage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

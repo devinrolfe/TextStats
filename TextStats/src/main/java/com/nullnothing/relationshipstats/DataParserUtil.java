@@ -1,12 +1,11 @@
 package com.nullnothing.relationshipstats;
 
-import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
-import com.nullnothing.relationshipstats.DataStorageObjects.HashMapContactInfoHolder;
-import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
-import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
-import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.dataStorageObjects.HashMapContactInfoHolder;
+import com.nullnothing.relationshipstats.dataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 
 import java.util.List;
 

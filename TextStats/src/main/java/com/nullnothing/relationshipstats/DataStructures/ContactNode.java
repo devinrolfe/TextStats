@@ -1,7 +1,7 @@
-package com.nullnothing.relationshipstats.DataStructures;
+package com.nullnothing.relationshipstats.dataStructures;
 
 import com.github.mikephil.charting.data.Entry;
-import com.nullnothing.relationshipstats.DataStorageObjects.ContactInfoHolder;
+import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
 import com.nullnothing.relationshipstats.graphing.EntryDataObject;
 
 import java.util.ArrayList;

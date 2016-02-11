@@ -1,12 +1,12 @@
-package com.nullnothing.relationshipstats.DataStorageObjects;
+package com.nullnothing.relationshipstats.dataStorageObjects;
 
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.TextMessageDecorator.MessageDecorator;
-import com.nullnothing.relationshipstats.TextMessageObjects.ReceivedMessage;
-import com.nullnothing.relationshipstats.TextMessageObjects.SentMessage;
-import com.nullnothing.relationshipstats.TextMessageObjects.TextMessage;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.textMessageDecorator.MessageDecorator;
+import com.nullnothing.relationshipstats.textMessageObjects.ReceivedMessage;
+import com.nullnothing.relationshipstats.textMessageObjects.SentMessage;
+import com.nullnothing.relationshipstats.textMessageObjects.TextMessage;
 
 import java.util.ArrayList;
 

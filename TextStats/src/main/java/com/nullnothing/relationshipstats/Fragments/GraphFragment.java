@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.Fragments;
+package com.nullnothing.relationshipstats.fragments;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,12 +22,12 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nullnothing.relationshipstats.DataParserUtil;
 import com.nullnothing.relationshipstats.DataPointCollection;
-import com.nullnothing.relationshipstats.DataStructures.ContactLinkedList;
-import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
+import com.nullnothing.relationshipstats.dataStructures.ContactNode;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.graphing.CustomMarkerView;
 import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
@@ -68,7 +68,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
                 throw new ClassCastException(getActivity().toString()
                     + " must implement MenuListener");
         }
-            mMenuListener.changeMenu(FragmentName.GraphFragment);
+            mMenuListener.changeNavigationMenu(FragmentName.GraphFragment);
         }
     }
 

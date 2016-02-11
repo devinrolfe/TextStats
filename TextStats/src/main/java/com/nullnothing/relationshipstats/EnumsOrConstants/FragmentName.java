@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.EnumsOrConstants;
+package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum FragmentName {
 

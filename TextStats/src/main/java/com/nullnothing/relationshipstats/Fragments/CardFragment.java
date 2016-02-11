@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats.Fragments;
+package com.nullnothing.relationshipstats.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.nullnothing.relationshipstats.DataStorageObjects.MainInfoHolder;
-import com.nullnothing.relationshipstats.EnumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.dataStorageObjects.MainInfoHolder;
+import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.R;
 
 
@@ -46,7 +46,7 @@ public class CardFragment extends Fragment implements FragmentInterface {
                 throw new ClassCastException(getActivity().toString()
                         + " must implement MenuListener");
             }
-            mMenuListener.changeMenu(FragmentName.CardFragment);
+            mMenuListener.changeNavigationMenu(FragmentName.CardFragment);
         }
     }
 

@@ -1,11 +1,11 @@
-package com.nullnothing.relationshipstats.Threads;
+package com.nullnothing.relationshipstats.threads;
 
-import com.nullnothing.relationshipstats.DataStructures.ContactNode;
-import com.nullnothing.relationshipstats.DataStructures.DefaultHashMap;
-import com.nullnothing.relationshipstats.EnumsOrConstants.Category;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.TextMessageDecorator.MessageDecorator;
+import com.nullnothing.relationshipstats.dataStructures.ContactNode;
+import com.nullnothing.relationshipstats.dataStructures.DefaultHashMap;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.textMessageDecorator.MessageDecorator;
 import com.nullnothing.relationshipstats.util.TimeFormatHelper;
 
 import java.util.Map;

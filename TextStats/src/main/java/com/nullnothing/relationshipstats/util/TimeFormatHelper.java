@@ -1,7 +1,7 @@
 package com.nullnothing.relationshipstats.util;
 
 
-import com.nullnothing.relationshipstats.EnumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
