@@ -67,6 +67,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:choiceMode="singleChoice"
+            android:listSelector="@color/colorAccent"
         />
 
     </android.support.design.widget.NavigationView>

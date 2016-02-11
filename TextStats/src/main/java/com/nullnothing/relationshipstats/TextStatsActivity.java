@@ -44,12 +44,11 @@ public class TextStatsActivity extends AppCompatActivity
 
     public static boolean backgroundCollectionDone = false;
 
-//    private DrawerLayout mDrawer;
     private DrawerLayout mDrawerLayout;
     ExpandableListAdapter mMenuAdapter;
     ExpandableListView expandableList;
-//    List<ExpandedMenuModel> listDataHeader;
-//    HashMap<ExpandedMenuModel, List<String>> listDataChild;
+    List<ExpandedMenuModel> listDataHeader;
+    HashMap<ExpandedMenuModel, List<String>> listDataChild;
 
     private Toolbar toolbar;
     private ViewPager viewPager;
@@ -75,8 +74,6 @@ public class TextStatsActivity extends AppCompatActivity
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-//        changeNavigationMenu(FragmentName.GraphFragment);
-
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(new TextStatsFragmentPagerAdapter(getSupportFragmentManager(), TextStatsActivity.this));
@@ -85,9 +82,6 @@ public class TextStatsActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        /* TODO: Need to wait for it to finish collecting data before we display the graph, atm
-            we can just have a static boolean value to do thing bit.
-        */
         collectData();
     }
 
@@ -105,23 +99,27 @@ public class TextStatsActivity extends AppCompatActivity
                 throw new IllegalArgumentException();
         }
 
-//        listDataHeader = navigationMenuHolder.getListDataHeader();
-//        listDataChild = navigationMenuHolder.getListDataChild();
+        listDataHeader = navigationMenuHolder.getListDataHeader();
+        listDataChild = navigationMenuHolder.getListDataChild();
         mMenuAdapter = new ExpandableListAdapter(this, navigationMenuHolder.getListDataHeader(), navigationMenuHolder.getListDataChild(), expandableList);
         // setting list adapter
         expandableList.setAdapter(mMenuAdapter);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-                        return true;
-                    }
-                });
+
+
+        expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                parent.setItemChecked(index, true);
+                Log.d("onNavigationItem", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).toString());
+                mDrawerLayout.closeDrawers();
+
+                return true;
+            }
+        });
     }
 
     private void collectData() {
