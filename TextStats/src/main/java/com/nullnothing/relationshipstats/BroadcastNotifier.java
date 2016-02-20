@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
+import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
+import com.nullnothing.relationshipstats.requests.IntentHelperFiller;
+import com.nullnothing.relationshipstats.requests.Request;
 
 import java.util.ArrayList;
 
@@ -39,10 +42,13 @@ public class BroadcastNotifier {
         mBroadcaster.sendBroadcast(localIntent);
     }
 
-
-
-    //TODO:: don't know if this method should be implemented
-    //public notifyProgress(String logData)
+    public void broadcastIntentWithState(int status, Request request) {
+        Intent localIntent = new Intent(Constants.BROADCAST_ACTION);
+        localIntent.putExtra(Constants.EXTENDED_DATA_STATUS, status);
+        localIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        IntentHelperFiller.FillRequestInIntent(localIntent, request);
+        mBroadcaster.sendBroadcast(localIntent);
+    }
 
 
 

@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nullnothing.relationshipstats.DataParserUtil;
 import com.nullnothing.relationshipstats.DataPointCollection;
+import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.dataStructures.ContactNode;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
@@ -31,6 +32,7 @@ import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.graphing.CustomMarkerView;
 import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
+import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +150,13 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void initialSetup() {
-        changeGraph(1, Category.RECEIVEDMSG, TimeInterval.MONTH, TimePeriod.ALL_TIME);
+        new GraphChangeRequestBuilder()
+                .numberOfContactsToGraph(1)
+                .category(Category.RECEIVEDMSG)
+                .interval(TimeInterval.MONTH)
+                .period(TimePeriod.ALL_TIME)
+                .build()
+                .executeRequest();
     }
 
     private List<LineDataSet> getDataSets(ContactLinkedList contactLinkedList) {

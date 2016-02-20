@@ -13,7 +13,7 @@ public enum TimeInterval {
     private final String dataInterval;
     private int rank;
 
-    private TimeInterval(final String dataInterval) {
+    TimeInterval(final String dataInterval) {
         this.dataInterval = dataInterval;
 
         switch(dataInterval) {
@@ -46,5 +46,28 @@ public enum TimeInterval {
         return dataInterval;
     }
     public int getRank() { return rank; }
+
+    public static TimeInterval getValueOf(String str) {
+
+        if (str.equals(TimeInterval.MINUTE.toString())) {
+            return TimeInterval.MINUTE;
+        }
+        if (str.equals(TimeInterval.HOUR.toString())) {
+            return TimeInterval.HOUR;
+        }
+        if (str.equals(TimeInterval.DAY.toString())) {
+            return TimeInterval.DAY;
+        }
+        if (str.equals(TimeInterval.WEEK.toString())) {
+            return TimeInterval.WEEK;
+        }
+        if (str.equals(TimeInterval.MONTH.toString())) {
+            return TimeInterval.MONTH;
+        }
+        if (str.equals(TimeInterval.YEAR.toString())) {
+            return TimeInterval.YEAR;
+        }
+        return null;
+    }
 
 }

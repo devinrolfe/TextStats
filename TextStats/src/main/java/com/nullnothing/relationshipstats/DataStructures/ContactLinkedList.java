@@ -5,6 +5,7 @@ import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class ContactLinkedList {
     public int getSize() { return size; }
 
     public void setXValues(List<String> xValuesList) { xValues = xValuesList; }
-    public List getXValues() { return xValues; }
+    public List<String> getXValues() { return xValues; }
 
     public ContactNode getHead() { return head; }
 

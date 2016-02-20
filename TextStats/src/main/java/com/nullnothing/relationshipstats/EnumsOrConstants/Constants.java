@@ -7,6 +7,16 @@ public final class Constants {
     // Defines the key for the status "extra" in an intent
     public static final String EXTENDED_DATA_STATUS = "com.nullnothing.relationshipstats.STATUS";
     public static final String EXTENDED_DATA_TEXTLIST = "com.nullnothing.relationshipstats.TEXTLIST";
+
+
+
+    // For Graph/Card
+    public static final String EXTENDED_DATA_NUM_CONTACTS= "com.nullnothing.relationshipstats.numContacts";
+    public static final String EXTENDED_DATA_CATEGORY= "com.nullnothing.relationshipstats.category";
+    public static final String EXTENDED_DATA_INTERVAL= "com.nullnothing.relationshipstats.interval";
+    public static final String EXTENDED_DATA_PERIOD = "com.nullnothing.relationshipstats.period";
+
+
     // Status values to broadcast to the Activity
 
     // The download is starting
@@ -21,6 +31,9 @@ public final class Constants {
     public static final int STATE_ACTION_COMPLETE = 4;
     // The background thread is doing logging
     public static final int STATE_LOG = -1;
+    //
+    public static final int CHANGE_GRAPH_REQUEST = 5;
+    public static final int CHANGE_CARD_REQUEST = 6;
 
     public static long lastReceivedTimestamp;
     public static long lastSentTimestamp;

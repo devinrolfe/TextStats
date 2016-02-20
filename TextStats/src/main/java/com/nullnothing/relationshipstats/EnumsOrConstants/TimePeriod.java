@@ -13,7 +13,7 @@ public enum TimePeriod {
     private final String period;
     private int rank;
 
-    private TimePeriod(final String period) {
+    TimePeriod(final String period) {
         this.period = period;
 
         switch(period) {
@@ -41,5 +41,25 @@ public enum TimePeriod {
     }
 
     public int getRank() { return rank; }
+
+    public static TimePeriod getValueOf(String str) {
+
+        if (str.equals(TimePeriod.DAY.toString())) {
+            return TimePeriod.DAY;
+        }
+        if (str.equals(TimePeriod.WEEK.toString())) {
+            return TimePeriod.WEEK;
+        }
+        if (str.equals(TimePeriod.MONTH.toString())) {
+            return TimePeriod.MONTH;
+        }
+        if (str.equals(TimePeriod.YEAR.toString())) {
+            return TimePeriod.YEAR;
+        }
+        if (str.equals(TimePeriod.ALL_TIME.toString())) {
+            return TimePeriod.ALL_TIME;
+        }
+        return null;
+    }
 
 }

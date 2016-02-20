@@ -20,12 +20,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nullnothing.relationshipstats.backgroundProcessing.CollectDataBackground;
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
+import com.nullnothing.relationshipstats.fragments.GraphFragment;
 import com.nullnothing.relationshipstats.fragments.TitleListener;
 import com.nullnothing.relationshipstats.fragments.MenuListener;
 import com.nullnothing.relationshipstats.fragments.RawDataFragment;
@@ -34,7 +37,10 @@ import com.nullnothing.relationshipstats.navigationMenu.ExpandableListAdapter;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuChanger;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuHolder;
+import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
+import com.nullnothing.relationshipstats.requests.Request;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +57,7 @@ public class TextStatsActivity extends AppCompatActivity
     HashMap<ExpandedMenuModel, List<String>> listDataChild;
 
     private Toolbar toolbar;
-    private ViewPager viewPager;
+    public ViewPager viewPager;
 
     private CollectDataReceiver mCollectDataReceiver;
 //    private Intent collectServiceIntent;
@@ -86,7 +92,7 @@ public class TextStatsActivity extends AppCompatActivity
     }
 
     public void changeNavigationMenu(FragmentName fragmentName) {
-        NavigationMenuHolder navigationMenuHolder = null;
+        NavigationMenuHolder navigationMenuHolder;
 
         switch (fragmentName) {
             case GraphFragment:
@@ -107,16 +113,14 @@ public class TextStatsActivity extends AppCompatActivity
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
-
-
         expandableList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 Log.d("onNavigationItem", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).toString());
+                // TODO : NEED TO great a request to change graph/card
                 mDrawerLayout.closeDrawers();
-
                 return true;
             }
         });
@@ -196,6 +200,14 @@ public class TextStatsActivity extends AppCompatActivity
         textView.setText(title);
     }
 
+    public void handleHandler(Request request) {
+
+
+
+
+    }
+
+
     // Broadcast receiver for receiving status updates from the IntentService
     private class CollectDataReceiver extends BroadcastReceiver {
 
@@ -204,19 +216,32 @@ public class TextStatsActivity extends AppCompatActivity
         }
         // Called when intent is received which it registered
         public void onReceive(Context context, Intent intent) {
-
+            FragmentInterface fragment;
             switch(intent.getIntExtra(Constants.EXTENDED_DATA_STATUS, -1)) {
                 case Constants.STATE_ACTION_COMPLETE:
                     Log.d("CollectData", "Finished");
 
-                    // TODO: Call method to current fragment to upload data
-                    FragmentInterface fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
+                    fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
                             "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
-
                     fragment.initialSetup();
 
 //                    textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
                     break;
+                case Constants.CHANGE_GRAPH_REQUEST :
+                    fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
+                            "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+
+                    if(!(fragment instanceof GraphFragment)) {
+                        throw new InvalidParameterException();
+                    }
+                    ((GraphFragment) fragment).changeGraph(
+                            intent.getIntExtra(Constants.EXTENDED_DATA_NUM_CONTACTS, -1),
+                            Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
+                            TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
+                            TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD))
+                    );
+                    break;
+                // TODO CHANGE_CARD_REQUEST
                 default:
                     break;
             }
