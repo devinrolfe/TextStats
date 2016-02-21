@@ -5,6 +5,7 @@ import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
+import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
 import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 import com.nullnothing.relationshipstats.requests.Request;
 import android.app.Activity;
@@ -27,6 +28,7 @@ public class GraphHandler extends IntentService implements Handler {
         if(!(request instanceof GraphChangeRequest)) {
             throw new InvalidParameterException();
         }
+
         mBroadcaster.broadcastIntentWithState(Constants.CHANGE_GRAPH_REQUEST, request);
     }
 

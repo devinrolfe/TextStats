@@ -20,13 +20,13 @@ public enum Category {
 
     public static Category getValueOf(String str) {
 
-        if (str.equals(Category.SENTANDRECEIVEDMSG.toString())) {
+        if (str.equals(Category.SENTANDRECEIVEDMSG.toString()) || str.equals(CategoryUI.BOTH.toString())) {
             return Category.SENTANDRECEIVEDMSG;
         }
-        if (str.equals(Category.SENTMSG.toString())) {
+        if (str.equals(Category.SENTMSG.toString()) || str.equals(CategoryUI.SENT.toString())) {
             return Category.SENTMSG;
         }
-        if (str.equals(Category.RECEIVEDMSG.toString())) {
+        if (str.equals(Category.RECEIVEDMSG.toString()) || str.equals(CategoryUI.RECEIVED.toString())) {
             return Category.RECEIVEDMSG;
         }
         return null;

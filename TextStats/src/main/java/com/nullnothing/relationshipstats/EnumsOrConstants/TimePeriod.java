@@ -44,19 +44,19 @@ public enum TimePeriod {
 
     public static TimePeriod getValueOf(String str) {
 
-        if (str.equals(TimePeriod.DAY.toString())) {
+        if (str.equals(TimePeriod.DAY.toString()) || str.equals(TimePeriodUI.DAY.toString())) {
             return TimePeriod.DAY;
         }
-        if (str.equals(TimePeriod.WEEK.toString())) {
+        if (str.equals(TimePeriod.WEEK.toString()) || str.equals(TimePeriodUI.WEEK.toString())) {
             return TimePeriod.WEEK;
         }
-        if (str.equals(TimePeriod.MONTH.toString())) {
+        if (str.equals(TimePeriod.MONTH.toString()) || str.equals(TimePeriodUI.MONTH.toString())) {
             return TimePeriod.MONTH;
         }
-        if (str.equals(TimePeriod.YEAR.toString())) {
+        if (str.equals(TimePeriod.YEAR.toString()) || str.equals(TimePeriodUI.YEAR.toString())) {
             return TimePeriod.YEAR;
         }
-        if (str.equals(TimePeriod.ALL_TIME.toString())) {
+        if (str.equals(TimePeriod.ALL_TIME.toString()) || str.equals(TimePeriodUI.ALL_TIME.toString())) {
             return TimePeriod.ALL_TIME;
         }
         return null;

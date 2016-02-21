@@ -19,7 +19,7 @@ public class GraphChangeRequest implements Request {
     // TODO : Have a static variable of request which represents the previous request, so
     // that we can create new requests using the values that did not change from the previous
     // request
-    private static ArrayList<GraphChangeRequest> prevRequests = new ArrayList<>();
+    public static ArrayList<GraphChangeRequest> prevRequests = new ArrayList<>();
 
     private int numContactToGraph;
     private Category category;

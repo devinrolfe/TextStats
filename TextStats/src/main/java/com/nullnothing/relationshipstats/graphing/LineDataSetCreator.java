@@ -15,7 +15,9 @@ public class LineDataSetCreator {
 
     private static Context context;
     public static LineDataSetCreator instance = null;
-    private static List<Integer> colours;
+    private static List<Integer> colours; // FIXME BUG WITH CHANGES COLOURS WHEN LOADING NEW GRAPH nav menu
+    private static int colourIndex = 0;
+
 
 
     public LineDataSetCreator(Context context){
@@ -29,6 +31,10 @@ public class LineDataSetCreator {
             instance = new LineDataSetCreator(context);
         }
         return instance;
+    }
+
+    public static void resetColours() {
+        colourIndex = 0;
     }
 
     private static void generateColours() {
@@ -75,8 +81,8 @@ public class LineDataSetCreator {
     public LineDataSet setDataSetInfo(LineDataSet mLineDataSet, boolean enableDash, int colour) {
 
         if(!enableDash) {
-            colour = colours.remove(0);
-            colours.add(colour); //Recycles colours
+            colour = colours.get(colourIndex);
+            colourIndex++;
         }
 
         mLineDataSet.setColor(colour);
@@ -97,5 +103,7 @@ public class LineDataSetCreator {
         }
         return mLineDataSet;
     }
+
+
 
 }

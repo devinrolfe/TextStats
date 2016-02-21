@@ -49,22 +49,22 @@ public enum TimeInterval {
 
     public static TimeInterval getValueOf(String str) {
 
-        if (str.equals(TimeInterval.MINUTE.toString())) {
+        if (str.equals(TimeInterval.MINUTE.toString()) || str.equals(TimeIntervalUI.MINUTE.toString())) {
             return TimeInterval.MINUTE;
         }
-        if (str.equals(TimeInterval.HOUR.toString())) {
+        if (str.equals(TimeInterval.HOUR.toString()) || str.equals(TimeIntervalUI.HOUR.toString())) {
             return TimeInterval.HOUR;
         }
-        if (str.equals(TimeInterval.DAY.toString())) {
+        if (str.equals(TimeInterval.DAY.toString()) || str.equals(TimeIntervalUI.DAY.toString())) {
             return TimeInterval.DAY;
         }
-        if (str.equals(TimeInterval.WEEK.toString())) {
+        if (str.equals(TimeInterval.WEEK.toString()) || str.equals(TimeIntervalUI.WEEK.toString())) {
             return TimeInterval.WEEK;
         }
-        if (str.equals(TimeInterval.MONTH.toString())) {
+        if (str.equals(TimeInterval.MONTH.toString()) || str.equals(TimeIntervalUI.MONTH.toString())) {
             return TimeInterval.MONTH;
         }
-        if (str.equals(TimeInterval.YEAR.toString())) {
+        if (str.equals(TimeInterval.YEAR.toString()) || str.equals(TimeIntervalUI.YEAR.toString())) {
             return TimeInterval.YEAR;
         }
         return null;

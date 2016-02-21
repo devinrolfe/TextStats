@@ -10,11 +10,10 @@ import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 
 public class GraphChangeRequestBuilder implements Builder {
     // Default values
-    private int numContactToGraph = 5;
-    private Category category = Category.RECEIVEDMSG;
-    private TimeInterval interval = TimeInterval.MONTH;
-    private TimePeriod period = TimePeriod.ALL_TIME;
-    private FragmentActivity fragmentActivity;
+    private int numContactToGraph;
+    private Category category;
+    private TimeInterval interval;
+    private TimePeriod period;
 
     public GraphChangeRequestBuilder() {
     }
@@ -48,8 +47,6 @@ public class GraphChangeRequestBuilder implements Builder {
         return BuilderName.GRAPH_CHANGE_REQUEST_BUILDER;
     }
 
-    public FragmentActivity getFragmentActivity() { return fragmentActivity; }
-
     public int getNumContactToGraph() {
         return numContactToGraph;
     }
@@ -65,4 +62,5 @@ public class GraphChangeRequestBuilder implements Builder {
     public TimePeriod getPeriod() {
         return period;
     }
+
 }

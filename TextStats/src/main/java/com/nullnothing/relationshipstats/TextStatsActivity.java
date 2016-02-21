@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.internal.NavigationMenuItemView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -39,6 +40,7 @@ import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuChanger;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuHolder;
 import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 import com.nullnothing.relationshipstats.requests.Request;
+import com.nullnothing.relationshipstats.util.NavigationMenuChangeHelper;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -119,7 +121,16 @@ public class TextStatsActivity extends AppCompatActivity
                 int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 parent.setItemChecked(index, true);
                 Log.d("onNavigationItem", listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).toString());
-                // TODO : NEED TO great a request to change graph/card
+
+                FragmentInterface fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
+                        "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
+
+                NavigationMenuChangeHelper.NavigationMenuChangeHelper(fragment,
+                        listDataChild,
+                        listDataHeader,
+                        groupPosition,
+                        childPosition);
+
                 mDrawerLayout.closeDrawers();
                 return true;
             }
@@ -199,14 +210,6 @@ public class TextStatsActivity extends AppCompatActivity
         TextView textView = (TextView) findViewById(R.id.graphTitleId);
         textView.setText(title);
     }
-
-    public void handleHandler(Request request) {
-
-
-
-
-    }
-
 
     // Broadcast receiver for receiving status updates from the IntentService
     private class CollectDataReceiver extends BroadcastReceiver {

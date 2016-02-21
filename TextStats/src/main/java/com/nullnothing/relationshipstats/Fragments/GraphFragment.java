@@ -150,6 +150,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void initialSetup() {
+        // TODO CHANGE DEFAULT
         new GraphChangeRequestBuilder()
                 .numberOfContactsToGraph(1)
                 .category(Category.RECEIVEDMSG)
@@ -199,6 +200,8 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void changeGraph(int numContactToGraph, Category category, TimeInterval interval, TimePeriod period) {
+
+        LineDataSetCreator.resetColours();
 
         long startTime = System.currentTimeMillis();
         Log.d("Graph Initial Setup", "START " + startTime);
