@@ -17,6 +17,7 @@ public class IntentHelperFiller {
             intent.putExtra(Constants.EXTENDED_DATA_CATEGORY, graphChangeRequest.getCategory().toString());
             intent.putExtra(Constants.EXTENDED_DATA_INTERVAL, graphChangeRequest.getInterval().toString());
             intent.putExtra(Constants.EXTENDED_DATA_PERIOD, graphChangeRequest.getPeriod().toString());
+            intent.putExtra(Constants.EXTENDED_DATA_DISABLE_LEGEND, graphChangeRequest.getDisableLegend());
         }
     }
 

@@ -241,7 +241,8 @@ public class TextStatsActivity extends AppCompatActivity
                             intent.getIntExtra(Constants.EXTENDED_DATA_NUM_CONTACTS, -1),
                             Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
                             TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
-                            TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD))
+                            TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),
+                            intent.getBooleanExtra(Constants.EXTENDED_DATA_DISABLE_LEGEND, false)
                     );
                     break;
                 // TODO CHANGE_CARD_REQUEST

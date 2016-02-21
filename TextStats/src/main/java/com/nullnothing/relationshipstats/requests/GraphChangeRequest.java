@@ -25,6 +25,7 @@ public class GraphChangeRequest implements Request {
     private Category category;
     private TimeInterval interval;
     private TimePeriod period;
+    private boolean disableLegend;
 
     public GraphChangeRequest(Builder builder) {
         if(!(builder instanceof GraphChangeRequestBuilder)) {
@@ -36,6 +37,10 @@ public class GraphChangeRequest implements Request {
         category = graphChangeRequestBuilder.getCategory();
         interval = graphChangeRequestBuilder.getInterval();
         period = graphChangeRequestBuilder.getPeriod();
+
+        if (graphChangeRequestBuilder.getToggleLegend() && prevRequests.size() > 0) {
+            disableLegend = prevRequests.get(prevRequests.size() - 1).disableLegend ? false : true;
+        }
 
         if(prevRequests.size() > 1) prevRequests.remove(0);
         prevRequests.add(this);
@@ -69,5 +74,7 @@ public class GraphChangeRequest implements Request {
     public TimePeriod getPeriod() {
         return period;
     }
+
+    public boolean getDisableLegend() { return disableLegend; }
 
 }

@@ -14,6 +14,7 @@ public class GraphChangeRequestBuilder implements Builder {
     private Category category;
     private TimeInterval interval;
     private TimePeriod period;
+    private boolean toggleLegend;
 
     public GraphChangeRequestBuilder() {
     }
@@ -35,6 +36,11 @@ public class GraphChangeRequestBuilder implements Builder {
 
     public GraphChangeRequestBuilder period(TimePeriod period) {
         this.period = period;
+        return this;
+    }
+
+    public GraphChangeRequestBuilder toggleLegend() {
+        this.toggleLegend = true;
         return this;
     }
 
@@ -62,5 +68,7 @@ public class GraphChangeRequestBuilder implements Builder {
     public TimePeriod getPeriod() {
         return period;
     }
+
+    public boolean getToggleLegend() { return toggleLegend; }
 
 }

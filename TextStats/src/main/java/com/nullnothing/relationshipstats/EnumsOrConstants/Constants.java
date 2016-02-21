@@ -15,7 +15,7 @@ public final class Constants {
     public static final String EXTENDED_DATA_CATEGORY= "com.nullnothing.relationshipstats.category";
     public static final String EXTENDED_DATA_INTERVAL= "com.nullnothing.relationshipstats.interval";
     public static final String EXTENDED_DATA_PERIOD = "com.nullnothing.relationshipstats.period";
-
+    public static final String EXTENDED_DATA_DISABLE_LEGEND = "com.nullnothing.relationshipstats.toggleLegend";
 
     // Status values to broadcast to the Activity
 

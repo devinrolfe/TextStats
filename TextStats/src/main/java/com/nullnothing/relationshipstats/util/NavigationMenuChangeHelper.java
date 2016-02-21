@@ -6,6 +6,7 @@ import android.util.Log;
 import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.NavigationMenuUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.Others;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
@@ -67,7 +68,9 @@ public class NavigationMenuChangeHelper {
             builder.period(TimePeriod.getValueOf(changeGraphValueName));
         }
         else if (changeGraphVariableName.equals(NavigationMenuUI.OTHER.toString())) {
-            // TODO Need to make the change for legend disable/enable
+            if (changeGraphValueName.equals(Others.ENABLE_DISABLE_LEGEND.toString())) {
+                builder.toggleLegend();
+            }
         }
     }
 

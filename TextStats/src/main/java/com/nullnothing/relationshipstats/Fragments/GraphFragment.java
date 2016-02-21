@@ -150,9 +150,8 @@ public class GraphFragment extends Fragment implements FragmentInterface {
     }
 
     public void initialSetup() {
-        // TODO CHANGE DEFAULT
         new GraphChangeRequestBuilder()
-                .numberOfContactsToGraph(1)
+                .numberOfContactsToGraph(3)
                 .category(Category.RECEIVEDMSG)
                 .interval(TimeInterval.MONTH)
                 .period(TimePeriod.ALL_TIME)
@@ -199,7 +198,9 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         mChart.invalidate();
     }
 
-    public void changeGraph(int numContactToGraph, Category category, TimeInterval interval, TimePeriod period) {
+    public void changeGraph(int numContactToGraph, Category category, TimeInterval interval, TimePeriod period, boolean disableLegend) {
+
+        mChart.getLegend().setEnabled(!disableLegend);
 
         LineDataSetCreator.resetColours();
 
