@@ -2,11 +2,11 @@
 <resources>
 
     <color name="colorAccent">#FFFFFF</color>
-    <color name="selectableItemBackground">#607D8B</color>
+    <color name="selectableItemBackground">#999999</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="textColorSecondary">#80FFFFFF</color>
-
-    <color name="actionBarBackground">#607D8B</color>
+    
+    <color name="actionBarBackground">#999999</color>
     <color name="actionbar_text">#FFFFFF</color>
 
     <color name="white">#FFFFFF</color>

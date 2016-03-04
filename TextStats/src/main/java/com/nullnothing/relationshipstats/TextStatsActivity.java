@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.internal.NavigationMenuItemView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
@@ -30,16 +29,14 @@ import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
 import com.nullnothing.relationshipstats.fragments.GraphFragment;
-import com.nullnothing.relationshipstats.fragments.TitleListener;
 import com.nullnothing.relationshipstats.fragments.MenuListener;
 import com.nullnothing.relationshipstats.fragments.RawDataFragment;
 import com.nullnothing.relationshipstats.fragments.TextStatsFragmentPagerAdapter;
+import com.nullnothing.relationshipstats.fragments.TitleListener;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandableListAdapter;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuChanger;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuHolder;
-import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
-import com.nullnothing.relationshipstats.requests.Request;
 import com.nullnothing.relationshipstats.util.NavigationMenuChangeHelper;
 
 import java.security.InvalidParameterException;
@@ -163,11 +160,14 @@ public class TextStatsActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
-                openSearch();
-                return true;
             case R.id.action_add_contact:
                openAddContact();
+                return true;
+            case R.id.action_delete_contact:
+                openDeleteContact();
+                return true;
+            case R.id.action_clear_contact:
+                openClearContact();
                 return true;
             case R.id.action_option:
                 mDrawerLayout.openDrawer(GravityCompat.END);
@@ -177,9 +177,6 @@ public class TextStatsActivity extends AppCompatActivity
         }
     }
 
-    // TODO : Remove
-    public void openSearch() {
-    }
     // TODO
     public void openAddContact() {
     }

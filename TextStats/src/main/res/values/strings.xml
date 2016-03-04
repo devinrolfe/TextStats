@@ -2,6 +2,8 @@
     <string name="app_name">Text Stats</string>
     <string name="action_search">Search</string>
     <string name="action_add_contact">Add Contact</string>
+    <string name="action_delete_contact">Delete Contact</string>
+    <string name="action_clear_contact">Clear Contact</string>
     <string name="action_option">Option</string>
 
     <!-- String values for Raw data fragment -->

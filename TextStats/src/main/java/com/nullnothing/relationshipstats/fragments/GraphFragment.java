@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.nullnothing.relationshipstats.DataParserUtil;
 import com.nullnothing.relationshipstats.DataPointCollection;
+import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.dataStructures.ContactNode;
@@ -29,23 +30,21 @@ import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.R;
 import com.nullnothing.relationshipstats.graphing.CustomMarkerView;
 import com.nullnothing.relationshipstats.graphing.LineDataSetCreator;
-import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GraphFragment extends Fragment implements FragmentInterface {
+public class GraphFragment extends Fragment implements com.nullnothing.relationshipstats.fragments.FragmentInterface {
 
     private Context context;
     private LineChart mChart;
     private View view;
 
-    TitleListener mTitleListener;
-    MenuListener mMenuListener;
+    com.nullnothing.relationshipstats.fragments.TitleListener mTitleListener;
+    com.nullnothing.relationshipstats.fragments.MenuListener mMenuListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -53,7 +52,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mTitleListener = (TitleListener) activity;
+            mTitleListener = (com.nullnothing.relationshipstats.fragments.TitleListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement TitleListener");
@@ -65,7 +64,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                mMenuListener = (MenuListener) getActivity();
+                mMenuListener = (com.nullnothing.relationshipstats.fragments.MenuListener) getActivity();
              } catch (ClassCastException e) {
                 throw new ClassCastException(getActivity().toString()
                     + " must implement MenuListener");
