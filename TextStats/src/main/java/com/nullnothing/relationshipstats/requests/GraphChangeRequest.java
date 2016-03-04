@@ -41,6 +41,9 @@ public class GraphChangeRequest implements Request {
         if (graphChangeRequestBuilder.getToggleLegend() && prevRequests.size() > 0) {
             disableLegend = prevRequests.get(prevRequests.size() - 1).disableLegend ? false : true;
         }
+        else if (prevRequests.size() > 0) {
+            disableLegend = prevRequests.get(prevRequests.size() - 1).disableLegend;
+        }
 
         if(prevRequests.size() > 1) prevRequests.remove(0);
         prevRequests.add(this);

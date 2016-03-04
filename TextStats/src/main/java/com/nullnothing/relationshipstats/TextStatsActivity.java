@@ -179,6 +179,11 @@ public class TextStatsActivity extends AppCompatActivity
 
     // TODO
     public void openAddContact() {
+        // 1. Need to get all contacts (Get from contact display list)
+        // 2. Get all contacts that are being graphed (request to fragment)
+        // 3. Modify list to show user
+        // 4. Show user selection of users they can add
+        // 5. Once a user is clicked, then send request to fragment with the updated list to graph
     }
     // TODO
     public void openDeleteContact() {
@@ -228,6 +233,7 @@ public class TextStatsActivity extends AppCompatActivity
 //                    textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
                     break;
                 case Constants.CHANGE_GRAPH_REQUEST :
+                    // TODO : We can use the same request, but add an extra to carry a list of contacts, everything else remains the same
                     fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
                             "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
 
