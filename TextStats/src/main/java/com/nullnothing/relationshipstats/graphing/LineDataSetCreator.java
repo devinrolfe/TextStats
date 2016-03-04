@@ -15,7 +15,7 @@ public class LineDataSetCreator {
 
     private static Context context;
     public static LineDataSetCreator instance = null;
-    private static List<Integer> colours; // FIXME BUG WITH CHANGES COLOURS WHEN LOADING NEW GRAPH nav menu
+    private static List<Integer> colours;
     private static int colourIndex = 0;
 
 
