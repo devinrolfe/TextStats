@@ -1,5 +1,14 @@
 package com.nullnothing.relationshipstats.navigationMenu;
 
+import com.nullnothing.relationshipstats.enumsOrConstants.Category;
+import com.nullnothing.relationshipstats.enumsOrConstants.CategoryUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.NavigationMenuUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.OtherUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimeIntervalUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriodUI;
+import com.nullnothing.relationshipstats.enumsOrConstants.TopContactsUI;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,55 +25,55 @@ public class NavigationMenuChanger {
         HashMap<ExpandedMenuModel, List<String>> listDataChild = new HashMap<>();
 
         ExpandedMenuModel topContact = new ExpandedMenuModel();
-        topContact.setIconName("Top # Of Contacts");
+        topContact.setIconName(NavigationMenuUI.Top_NUM_CONTACTS.toString());
         listDataHeader.add(topContact);
 
         ExpandedMenuModel messageType = new ExpandedMenuModel();
-        messageType.setIconName("Message Types");
+        messageType.setIconName(NavigationMenuUI.MESSAGE_TYPES.toString());
         listDataHeader.add(messageType);
 
         ExpandedMenuModel interval = new ExpandedMenuModel();
-        interval.setIconName("Intervals");
+        interval.setIconName(NavigationMenuUI.INTERVALS.toString());
         listDataHeader.add(interval);
 
         ExpandedMenuModel period = new ExpandedMenuModel();
-        period.setIconName("Periods");
+        period.setIconName(NavigationMenuUI.PERIOD.toString());
         listDataHeader.add(period);
 
         ExpandedMenuModel other = new ExpandedMenuModel();
-        other.setIconName("Others");
+        other.setIconName(NavigationMenuUI.OTHER.toString());
         listDataHeader.add(other);
 
         // Adding child data
         List<String> topContacts = new ArrayList<>();
-        topContacts.add("1");
-        topContacts.add("3");
-        topContacts.add("5");
-        topContacts.add("10");
-        topContacts.add("20");
+        topContacts.add(TopContactsUI.ONE.toString());
+        topContacts.add(TopContactsUI.THREE.toString());
+        topContacts.add(TopContactsUI.FIVE.toString());
+        topContacts.add(TopContactsUI.TEN.toString());
+        topContacts.add(TopContactsUI.TWENTY.toString());
 
         List<String> messageTypes = new ArrayList<>();
-        messageTypes.add("Received");
-        messageTypes.add("Sent");
-        messageTypes.add("Both");
+        messageTypes.add(CategoryUI.RECEIVED.toString());
+        messageTypes.add(CategoryUI.SENT.toString());
+        messageTypes.add(CategoryUI.BOTH.toString());
 
         List<String> intervals = new ArrayList<>();
-        intervals.add("Minute");
-        intervals.add("Hour");
-        intervals.add("Day");
-        intervals.add("Week");
-        intervals.add("Month");
-        intervals.add("Year");
+        intervals.add(TimeIntervalUI.MINUTE.toString());
+        intervals.add(TimeIntervalUI.HOUR.toString());
+        intervals.add(TimeIntervalUI.DAY.toString());
+        intervals.add(TimeIntervalUI.WEEK.toString());
+        intervals.add(TimeIntervalUI.MONTH.toString());
+        intervals.add(TimeIntervalUI.YEAR.toString());
 
         List<String> periods = new ArrayList<>();
-        periods.add("Day");
-        periods.add("Week");
-        periods.add("Month");
-        periods.add("Year");
-        periods.add("All-Time");
+        periods.add(TimePeriodUI.DAY.toString());
+        periods.add(TimePeriodUI.WEEK.toString());
+        periods.add(TimePeriodUI.MONTH.toString());
+        periods.add(TimePeriodUI.YEAR.toString());
+        periods.add(TimePeriodUI.ALL_TIME.toString());
 
         List<String> others = new ArrayList<>();
-        others.add("Enable/Disable Legend");
+        others.add(OtherUI.LEGEND.toString());
 
         listDataChild.put(listDataHeader.get(0), topContacts);// Header, Child data
         listDataChild.put(listDataHeader.get(1), messageTypes);

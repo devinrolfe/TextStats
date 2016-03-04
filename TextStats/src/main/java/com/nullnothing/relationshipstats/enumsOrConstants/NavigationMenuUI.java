@@ -1,7 +1,6 @@
 package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum NavigationMenuUI {
-    // TODO make sure the ui navigation menu uses these names
     Top_NUM_CONTACTS("Top # Of Contacts"),
     MESSAGE_TYPES("Message Types"),
     INTERVALS("Intervals"),

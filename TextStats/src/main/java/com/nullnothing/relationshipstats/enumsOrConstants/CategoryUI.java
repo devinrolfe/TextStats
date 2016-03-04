@@ -1,7 +1,6 @@
 package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum CategoryUI {
-    // TODO make sure the ui navigation menu uses these names
     BOTH("Both"),
     SENT("Sent"),
     RECEIVED("Received")

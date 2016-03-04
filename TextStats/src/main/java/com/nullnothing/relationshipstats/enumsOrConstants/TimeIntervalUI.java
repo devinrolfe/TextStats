@@ -1,8 +1,6 @@
 package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum TimeIntervalUI {
-    // TODO make sure the ui navigation menu uses these names
-
     MINUTE("Minute"),
     HOUR("Hour"),
     DAY("Day"),
