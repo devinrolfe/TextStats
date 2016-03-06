@@ -1,9 +1,8 @@
 package com.nullnothing.relationshipstats.util;
 
-import android.support.design.widget.NavigationView;
-import android.util.Log;
-
+import com.nullnothing.relationshipstats.DataParserUtil;
 import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.NavigationMenuUI;
 import com.nullnothing.relationshipstats.enumsOrConstants.Others;
@@ -13,9 +12,7 @@ import com.nullnothing.relationshipstats.fragments.FragmentInterface;
 import com.nullnothing.relationshipstats.fragments.GraphFragment;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
 import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
-import com.nullnothing.relationshipstats.requests.Request;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +53,20 @@ public class NavigationMenuChangeHelper {
                                              GraphChangeRequestBuilder builder) {
 
         if (changeGraphVariableName.equals(NavigationMenuUI.Top_NUM_CONTACTS.toString())) {
-            builder.numberOfContactsToGraph(Integer.parseInt(changeGraphValueName));
+
+            ContactLinkedList contactsToGraph;
+            ArrayList<GraphChangeRequest> prevRequest = GraphChangeRequest.prevRequests;
+
+            if (prevRequest.size() > 0) {
+                contactsToGraph = DataParserUtil.getTopContactsInCategory(
+                        Integer.parseInt(changeGraphValueName),
+                        prevRequest.get(prevRequest.size() - 1).getCategory(),
+                        prevRequest.get(prevRequest.size() - 1).getPeriod());
+            }
+            else {
+                contactsToGraph = DataParserUtil.getTopContactsInCategory(3, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
+            }
+            builder.contactsToGraph(contactsToGraph);
         }
         else if (changeGraphVariableName.equals(NavigationMenuUI.MESSAGE_TYPES.toString())) {
             builder.category(Category.getValueOf(changeGraphValueName));
@@ -85,8 +95,13 @@ public class NavigationMenuChangeHelper {
             return;
         }
         // check what values in builder are not set, then set those values using prev requests
-        if (builder.getNumContactToGraph() < 1) {
-            builder.numberOfContactsToGraph(prevRequests.get(size - 1).getNumContactToGraph());
+        if (builder.getContactsToGraph() == null) {
+            ArrayList<GraphChangeRequest> prevRequest = GraphChangeRequest.prevRequests;
+
+            if (prevRequest.size() > 0) {
+                builder.contactsToGraph(prevRequest.get(prevRequest.size() - 1).getContactsToGraph());
+
+            }
         }
         if (builder.getCategory() == null) {
             builder.category(prevRequests.get(size - 1).getCategory());

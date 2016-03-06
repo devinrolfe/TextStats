@@ -1,5 +1,6 @@
 package com.nullnothing.relationshipstats;
 
+import com.nullnothing.relationshipstats.dataPoint.dataPointUtil;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.dataStructures.ContactNode;
 import com.nullnothing.relationshipstats.enumsOrConstants.CalendarHelper;
@@ -7,8 +8,8 @@ import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
-import com.nullnothing.relationshipstats.threads.DataPointThread;
 import com.nullnothing.relationshipstats.util.TimeFormatHelper;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,10 +30,7 @@ public class DataPointCollection {
         int calendarValue = convertStringIntervalOrPeriodToInt(interval.toString());
 
         while(cal.getTimeInMillis() > firstXTime) {
-            if (calendarValue == Calendar.MINUTE) {
-                cal.add(Calendar.MINUTE, -1);
-            }
-            else if (calendarValue == Calendar.HOUR) {
+            if (calendarValue == Calendar.HOUR) {
                 cal.add(Calendar.HOUR, -1);
             }
             else if (calendarValue == Calendar.DATE) {
@@ -53,10 +51,7 @@ public class DataPointCollection {
     }
 
     public static int convertStringIntervalOrPeriodToInt(String intervalOrPeriod) {
-       if (intervalOrPeriod.equals(TimeInterval.MINUTE.toString())) {
-           return Calendar.MINUTE;
-       }
-       else if (intervalOrPeriod.equals(TimeInterval.HOUR.toString())) {
+       if (intervalOrPeriod.equals(TimeInterval.HOUR.toString())) {
            return Calendar.HOUR;
        }
        else if (intervalOrPeriod.equals(TimePeriod.DAY.toString())) {
@@ -79,7 +74,10 @@ public class DataPointCollection {
        }
     }
 
-    public static long subtractIntervalFromTime(Calendar cal, int calendarIntValue, Category category) {
+    public static long subtractIntervalFromTime(Calendar calposer, int calendarIntValue, Category category) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(calposer.getTimeInMillis());
 
         if (calendarIntValue == Calendar.WEEK_OF_MONTH) {
             cal.add(Calendar.DATE, -7);
@@ -90,6 +88,9 @@ public class DataPointCollection {
         else {
             cal.add(calendarIntValue, -1);
         }
+//        else if(calendarIntValue == Calendar.YEAR){
+//            cal.add(Calendar.YEAR, -1);
+//        }
         return cal.getTimeInMillis();
     }
 
@@ -109,22 +110,35 @@ public class DataPointCollection {
     public static void setYValues(ContactLinkedList contactLinkedList, List<String> xValueList, TimeInterval interval, TimePeriod period, Category category) {
         ContactNode node = contactLinkedList.getHead();
 
-        List<Thread> threads = new ArrayList();
+        // TODO Selecting minutes on Time interval will eventually crash app, takes too long need solution
+        // CAME to conclusion that minutes is not that helpful, but I should still implement about
+        // 8 threads in the background that can handle the work to make everything else smoother
+
 
         while (node != null) {
-            Thread thread = new Thread(new DataPointThread(node, interval, period, category));
-            threads.add(thread);
-            thread.start();
+            dataPointUtil.run(node, interval, period, category);
             node = node.next;
         }
 
-        for (Thread thread: threads) {
-            try {
-                thread.join();
-            } catch(InterruptedException e) {
 
-            }
-        }
+
+//        List<Thread> threads = new ArrayList();
+//
+//        // TODO : THIS IS CAUSING A BUG becase too many threads are being generated
+//        while (node != null) {
+//            Thread thread = new Thread(new DataPointThread(node, interval, period, category));
+//            threads.add(thread);
+//            thread.start();
+//            node = node.next;
+//        }
+//
+//        for (Thread thread: threads) {
+//            try {
+//                thread.join();
+//            } catch(InterruptedException e) {
+//
+//            }
+//        }
     }
 
 }

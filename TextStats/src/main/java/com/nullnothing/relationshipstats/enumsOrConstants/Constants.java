@@ -11,7 +11,8 @@ public final class Constants {
 
 
     // For Graph/Card
-    public static final String EXTENDED_DATA_NUM_CONTACTS= "com.nullnothing.relationshipstats.numContacts";
+    public static final String EXTENDED_DATA_CONTACTS = "com.nullnothing.relationshipstats.contactList";
+//    public static final String EXTENDED_DATA_NUM_CONTACTS= "com.nullnothing.relationshipstats.numContacts";
     public static final String EXTENDED_DATA_CATEGORY= "com.nullnothing.relationshipstats.category";
     public static final String EXTENDED_DATA_INTERVAL= "com.nullnothing.relationshipstats.interval";
     public static final String EXTENDED_DATA_PERIOD = "com.nullnothing.relationshipstats.period";

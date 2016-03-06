@@ -1,6 +1,9 @@
 package com.nullnothing.relationshipstats.dataStructures;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.nullnothing.relationshipstats.dataStorageObjects.ContactInfoHolder;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ContactLinkedList {
+public class ContactLinkedList implements Parcelable {
 
     private ContactNode head;
     private ContactNode end;
@@ -113,7 +116,55 @@ public class ContactLinkedList {
         }
 
     }
+//    ContactNode node = contactLinkedList.getHead();
+//
+//    List<Thread> threads = new ArrayList();
+//
+//    while (node != null) {
+//        Thread thread = new Thread(new DataPointThread(node, interval, period, category));
+//        threads.add(thread);
+//        thread.start();
+//        node = node.next;
+//    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(head);
+        dest.writeValue(end);
+        dest.writeInt(size);
+        dest.writeValue(category);
+        dest.writeValue(timePeriod);
+        dest.writeList(xValues);
+        dest.writeMap(quickAccessMap);
+    }
+
+    private ContactLinkedList(Parcel in) {
+        head = (ContactNode)in.readValue(ContactNode.class.getClassLoader());
+        end = (ContactNode)in.readValue(ContactNode.class.getClassLoader());
+        size = (int)in.readInt();
+        category = (Category)in.readValue(Category.class.getClassLoader());
+        timePeriod = (TimePeriod)in.readValue(TimePeriod.class.getClassLoader());
+
+        xValues = new ArrayList<String>();
+        in.readList(xValues, null);
+
+        quickAccessMap = new DefaultHashMap<>(null);
+        in.readMap(quickAccessMap, null);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
 
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public ContactLinkedList createFromParcel(Parcel in) {
+            return new ContactLinkedList(in);
+        }
 
+        public ContactLinkedList[] newArray(int size) {
+            return new ContactLinkedList[size];
+        }
+    };
 }

@@ -149,8 +149,11 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
     }
 
     public void initialSetup() {
+
+        ContactLinkedList contactsToGraph = DataParserUtil.getTopContactsInCategory(3, Category.RECEIVEDMSG, TimePeriod.ALL_TIME);
+
         new GraphChangeRequestBuilder()
-                .numberOfContactsToGraph(3)
+                .contactsToGraph(contactsToGraph)
                 .category(Category.RECEIVEDMSG)
                 .interval(TimeInterval.MONTH)
                 .period(TimePeriod.ALL_TIME)
@@ -197,7 +200,7 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
         mChart.invalidate();
     }
 
-    public void changeGraph(int numContactToGraph, Category category, TimeInterval interval, TimePeriod period, boolean disableLegend) {
+    public void changeGraph(ContactLinkedList contactLinkedList, Category category, TimeInterval interval, TimePeriod period, boolean disableLegend) {
 
         mChart.getLegend().setEnabled(!disableLegend);
 
@@ -205,9 +208,6 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
 
         long startTime = System.currentTimeMillis();
         Log.d("Graph Initial Setup", "START " + startTime);
-
-        ContactLinkedList contactLinkedList =
-                DataParserUtil.getTopContactsInCategory(numContactToGraph, category, period);
 
         List<String> xValueList = DataPointCollection.getXValues(interval, period, category);
         contactLinkedList.setXValues(xValueList);

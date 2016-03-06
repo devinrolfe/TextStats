@@ -2,7 +2,6 @@ package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum TimeInterval {
 
-    MINUTE("minute"),
     HOUR("hour"),
     DAY("day"),
     WEEK("week"),
@@ -17,9 +16,6 @@ public enum TimeInterval {
         this.dataInterval = dataInterval;
 
         switch(dataInterval) {
-            case "minute":
-                rank = 1;
-                break;
             case "hour":
                 rank = 2;
                 break;
@@ -49,9 +45,6 @@ public enum TimeInterval {
 
     public static TimeInterval getValueOf(String str) {
 
-        if (str.equals(TimeInterval.MINUTE.toString()) || str.equals(TimeIntervalUI.MINUTE.toString())) {
-            return TimeInterval.MINUTE;
-        }
         if (str.equals(TimeInterval.HOUR.toString()) || str.equals(TimeIntervalUI.HOUR.toString())) {
             return TimeInterval.HOUR;
         }

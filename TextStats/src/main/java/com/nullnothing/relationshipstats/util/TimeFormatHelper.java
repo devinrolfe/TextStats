@@ -20,14 +20,14 @@ public class TimeFormatHelper {
     private static String getTimeFormat(Date date, TimeInterval interval) {
         int intervalRank = interval.getRank();
 
-        if(intervalRank == TimeInterval.MINUTE.getRank()) {
-            return new SimpleDateFormat("h:mm a MM/dd/yyyy").format(date);
-        }
-        else if(intervalRank == TimeInterval.HOUR.getRank()) {
+        if(intervalRank == TimeInterval.HOUR.getRank()) {
             return new SimpleDateFormat("h a MM/dd/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.WEEK.getRank()) {
-            return new SimpleDateFormat("Week E, MM/dd/yyyy").format(date);
+            return  "Week " +
+                    new SimpleDateFormat("W").format(date) +
+                    ", " +
+                    new SimpleDateFormat("MM/yyyy").format(date);
         }
         else if(intervalRank == TimeInterval.DAY.getRank()) {
             return new SimpleDateFormat("MM/dd/yyyy").format(date);

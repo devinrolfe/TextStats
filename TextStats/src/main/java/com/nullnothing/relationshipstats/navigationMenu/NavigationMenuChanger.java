@@ -1,10 +1,8 @@
 package com.nullnothing.relationshipstats.navigationMenu;
 
-import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.CategoryUI;
 import com.nullnothing.relationshipstats.enumsOrConstants.NavigationMenuUI;
 import com.nullnothing.relationshipstats.enumsOrConstants.OtherUI;
-import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeIntervalUI;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriodUI;
 import com.nullnothing.relationshipstats.enumsOrConstants.TopContactsUI;
@@ -12,7 +10,6 @@ import com.nullnothing.relationshipstats.enumsOrConstants.TopContactsUI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class NavigationMenuChanger {
 
@@ -58,7 +55,6 @@ public class NavigationMenuChanger {
         messageTypes.add(CategoryUI.BOTH.toString());
 
         List<String> intervals = new ArrayList<>();
-        intervals.add(TimeIntervalUI.MINUTE.toString());
         intervals.add(TimeIntervalUI.HOUR.toString());
         intervals.add(TimeIntervalUI.DAY.toString());
         intervals.add(TimeIntervalUI.WEEK.toString());

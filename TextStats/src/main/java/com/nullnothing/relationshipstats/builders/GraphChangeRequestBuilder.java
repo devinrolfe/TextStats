@@ -1,7 +1,6 @@
 package com.nullnothing.relationshipstats.builders;
 
-import android.support.v4.app.FragmentActivity;
-
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.enumsOrConstants.BuilderName;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
@@ -10,7 +9,7 @@ import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 
 public class GraphChangeRequestBuilder implements Builder {
     // Default values
-    private int numContactToGraph;
+    private ContactLinkedList contactsToGraph;
     private Category category;
     private TimeInterval interval;
     private TimePeriod period;
@@ -19,8 +18,8 @@ public class GraphChangeRequestBuilder implements Builder {
     public GraphChangeRequestBuilder() {
     }
 
-    public GraphChangeRequestBuilder numberOfContactsToGraph(int numContactToGraph) {
-        this.numContactToGraph = numContactToGraph;
+    public GraphChangeRequestBuilder contactsToGraph(ContactLinkedList contactsToGraph) {
+        this.contactsToGraph = contactsToGraph;
         return this;
     }
 
@@ -53,8 +52,8 @@ public class GraphChangeRequestBuilder implements Builder {
         return BuilderName.GRAPH_CHANGE_REQUEST_BUILDER;
     }
 
-    public int getNumContactToGraph() {
-        return numContactToGraph;
+    public ContactLinkedList getContactsToGraph() {
+        return contactsToGraph;
     }
 
     public Category getCategory() {
@@ -69,6 +68,8 @@ public class GraphChangeRequestBuilder implements Builder {
         return period;
     }
 
-    public boolean getToggleLegend() { return toggleLegend; }
+    public boolean getToggleLegend() {
+        return toggleLegend;
+    }
 
 }

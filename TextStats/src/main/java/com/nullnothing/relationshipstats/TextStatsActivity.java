@@ -22,6 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.nullnothing.relationshipstats.backgroundProcessing.CollectDataBackground;
+import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
@@ -154,6 +155,32 @@ public class TextStatsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_relationship_stats, menu);
+
+
+//        MenuItem item = menu.findItem(R.id.action_add_contact);
+//
+//        item.setActionView(R.layout.add_contacts_menu);
+//
+//        Spinner spinnerNumber = (Spinner)item.getActionView();
+//
+//        // Drop down menu for add/delete contacts on actionbar
+//
+//        int breakpint = 2;
+
+
+//        Spinner addContactSpinner = (Spinner) findViewById(R.id.add_contact_spinner);
+//        ArrayAdapter<CharSequence> addAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.add_contacts_array, android.R.layout.simple_spinner_item);
+//        addAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        addContactSpinner.setAdapter(addAdapter);
+
+//        Spinner deleteContactSpinner = (Spinner) findViewById(R.id.add_contact_spinner);
+//        ArrayAdapter<CharSequence> deleteAdapter = ArrayAdapter.createFromResource(this,
+//                R.array.add_contacts_array, android.R.layout.simple_spinner_item);
+//        deleteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        deleteContactSpinner.setAdapter(deleteAdapter);
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -229,19 +256,19 @@ public class TextStatsActivity extends AppCompatActivity
                     fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
                             "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
                     fragment.initialSetup();
-
-//                    textMessages = intent.getStringArrayListExtra(Constants.EXTENDED_DATA_TEXTLIST);
                     break;
                 case Constants.CHANGE_GRAPH_REQUEST :
-                    // TODO : We can use the same request, but add an extra to carry a list of contacts, everything else remains the same
                     fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
                             "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
 
                     if(!(fragment instanceof GraphFragment)) {
                         throw new InvalidParameterException();
                     }
+
+                    // TODO : Update add/delete contact list here
+
                     ((GraphFragment) fragment).changeGraph(
-                            intent.getIntExtra(Constants.EXTENDED_DATA_NUM_CONTACTS, -1),
+                            (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS),
                             Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
                             TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
                             TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),

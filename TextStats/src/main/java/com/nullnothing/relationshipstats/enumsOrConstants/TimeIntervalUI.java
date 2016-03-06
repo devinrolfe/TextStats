@@ -1,7 +1,6 @@
 package com.nullnothing.relationshipstats.enumsOrConstants;
 
 public enum TimeIntervalUI {
-    MINUTE("Minute"),
     HOUR("Hour"),
     DAY("Day"),
     WEEK("Week"),

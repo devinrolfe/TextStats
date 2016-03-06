@@ -26,13 +26,19 @@
         <!-- android:textColorSecondary is the color of the menu
              overflow icon (three vertical dots) -->
         <item name="android:textColorSecondary">@color/actionbar_text</item>
-
         <!-- This would set the toolbar's background color,
               but setting this also changes the popup menu's background,
               even if we define popupTheme for our <Toolbar> -->
-        <!-- <item name="android:background">@color/color_primary</item> -->
+         <!--<item name="android:background">@color/white</item>-->
     </style>
 
+    <!--// TODO : This is the drop down menu colours, really cool-->
+    <style name="Toolbar_Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">#000</item>
+        <item name="android:background">#fff</item>
+    </style>
 
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowNoTitle">true</item>-->
 
 </resources>

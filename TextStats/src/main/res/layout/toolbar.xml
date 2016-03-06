@@ -8,6 +8,8 @@
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/MyActionBarTheme"
-    app:popupTheme="@style/Theme.AppCompat.NoActionBar"
+    app:popupTheme="@style/Toolbar_Popup"
     android:background="@color/actionBarBackground">
 </android.support.v7.widget.Toolbar>
+
+    <!--app:popupTheme="@style/Theme.AppCompat.NoActionBar"-->
