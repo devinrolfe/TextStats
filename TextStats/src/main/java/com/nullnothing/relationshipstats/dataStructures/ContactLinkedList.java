@@ -41,6 +41,10 @@ public class ContactLinkedList implements Parcelable {
 
     public ContactNode getHead() { return head; }
 
+    public Map<String, ContactNode> getMap() {
+        return quickAccessMap;
+    }
+
     public int getEndValue() {
         if (end == null) {
             return -1;
@@ -54,6 +58,9 @@ public class ContactLinkedList implements Parcelable {
     }
 
     public void add(ContactInfoHolder contact, boolean allowSizeViolation) {
+        if (allowSizeViolation) {
+            size++;
+        }
         ContactNode node = new ContactNode(contact);
 
         if(head == null) {
@@ -114,18 +121,40 @@ public class ContactLinkedList implements Parcelable {
                 }
             }
         }
-
     }
-//    ContactNode node = contactLinkedList.getHead();
-//
-//    List<Thread> threads = new ArrayList();
-//
-//    while (node != null) {
-//        Thread thread = new Thread(new DataPointThread(node, interval, period, category));
-//        threads.add(thread);
-//        thread.start();
-//        node = node.next;
-//    }
+
+    public void remove(ContactInfoHolder contact) {
+        if(head == null) {
+            return;
+        }
+        size--;
+
+        String contactRawId = contact.getId();
+
+        ContactNode node = head;
+        ContactNode prev = null;
+
+        while (!node.getData().getId().equals(contactRawId)) {
+            prev = node;
+            node = node.next;
+        }
+        // found node
+        if (contactRawId.equals(node.getData().getId())) {
+            quickAccessMap.put(node.getData().getId(), null);
+            if (prev == null) {
+                head = node.next;
+                if (head == null) {
+                    end = null;
+                }
+            }
+            else {
+                if (node == end) {
+                    end = node.next;
+                }
+                prev.next = node.next;
+            }
+        }
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

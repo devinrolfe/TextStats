@@ -38,4 +38,8 @@ public final class Constants {
 
     public static long lastReceivedTimestamp;
     public static long lastSentTimestamp;
+
+
+    public static final String ADD_CONTACT_ACTION = "Add Contact";
+    public static final String DELETE_CONTACT_ACTION = "Delete Contact";
 }

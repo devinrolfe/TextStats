@@ -1,4 +1,4 @@
-package com.nullnothing.relationshipstats;
+package com.nullnothing.relationshipstats.dataPoint;
 
 import com.nullnothing.relationshipstats.dataPoint.dataPointUtil;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;

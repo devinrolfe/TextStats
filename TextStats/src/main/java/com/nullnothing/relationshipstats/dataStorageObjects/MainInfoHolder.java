@@ -4,6 +4,9 @@ package com.nullnothing.relationshipstats.dataStorageObjects;
 import com.nullnothing.relationshipstats.textMessageObjects.TextMessage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MainInfoHolder {
 
@@ -13,6 +16,7 @@ public class MainInfoHolder {
     //private HashMap<String, ContactInfoHolder> contactMap =
     private HashMapContactInfoHolder contactMap = new HashMapContactInfoHolder(contactCount);
     private ArrayList<String> contactList = new ArrayList<String>();
+    private Map<String, String> contactSimpleMap = new HashMap<String, String>();
 
     public MainInfoHolder(int contactCount) {
         this.contactCount = contactCount;
@@ -27,6 +31,7 @@ public class MainInfoHolder {
     }
 
     public  HashMapContactInfoHolder getContacts() { return contactMap; }
+    public Map<String, String> getSimpleContacts() { return contactSimpleMap; }
     public ArrayList getContactList() { return contactList; }
 
     /**
@@ -35,6 +40,7 @@ public class MainInfoHolder {
     public void addContact(ContactInfoHolder contactInfoHolder) {
         if(this.contactMap.get(contactInfoHolder.getId()) == null) { //make sure not to overwrite previous contact
             this.contactMap.put(contactInfoHolder.getId(), contactInfoHolder);
+            contactSimpleMap.put(contactInfoHolder.getId(), contactInfoHolder.getName());
             this.contactList.add(contactInfoHolder.getId());
         }
     }
@@ -55,4 +61,5 @@ public class MainInfoHolder {
 
 
     }
+
 }

@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.nullnothing.relationshipstats.ActivityHelpers.ActionBarButtonUpdater;
+import com.nullnothing.relationshipstats.ActivityHelpers.ContactsAvailability;
 import com.nullnothing.relationshipstats.backgroundProcessing.CollectDataBackground;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
@@ -62,6 +64,9 @@ public class TextStatsActivity extends AppCompatActivity
     private CollectDataReceiver mCollectDataReceiver;
 //    private Intent collectServiceIntent;
     private ArrayList<String> textMessages;
+
+    private Menu activityMenu;
+    private ContactsAvailability contactsAvailability;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,32 +160,7 @@ public class TextStatsActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_relationship_stats, menu);
-
-
-//        MenuItem item = menu.findItem(R.id.action_add_contact);
-//
-//        item.setActionView(R.layout.add_contacts_menu);
-//
-//        Spinner spinnerNumber = (Spinner)item.getActionView();
-//
-//        // Drop down menu for add/delete contacts on actionbar
-//
-//        int breakpint = 2;
-
-
-//        Spinner addContactSpinner = (Spinner) findViewById(R.id.add_contact_spinner);
-//        ArrayAdapter<CharSequence> addAdapter = ArrayAdapter.createFromResource(this,
-//                R.array.add_contacts_array, android.R.layout.simple_spinner_item);
-//        addAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        addContactSpinner.setAdapter(addAdapter);
-
-//        Spinner deleteContactSpinner = (Spinner) findViewById(R.id.add_contact_spinner);
-//        ArrayAdapter<CharSequence> deleteAdapter = ArrayAdapter.createFromResource(this,
-//                R.array.add_contacts_array, android.R.layout.simple_spinner_item);
-//        deleteAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        deleteContactSpinner.setAdapter(deleteAdapter);
-
-
+        activityMenu = menu;
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -204,18 +184,11 @@ public class TextStatsActivity extends AppCompatActivity
         }
     }
 
-    // TODO
+    // Functions below are not used, just place holders for now
     public void openAddContact() {
-        // 1. Need to get all contacts (Get from contact display list)
-        // 2. Get all contacts that are being graphed (request to fragment)
-        // 3. Modify list to show user
-        // 4. Show user selection of users they can add
-        // 5. Once a user is clicked, then send request to fragment with the updated list to graph
     }
-    // TODO
     public void openDeleteContact() {
     }
-    // TODO
     public void openClearContact() {
     }
 
@@ -265,10 +238,15 @@ public class TextStatsActivity extends AppCompatActivity
                         throw new InvalidParameterException();
                     }
 
+                    ContactLinkedList contactLinkedList = (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS);
+                    contactsAvailability = new ContactsAvailability(contactLinkedList);
+
+                    ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
+
                     // TODO : Update add/delete contact list here
 
                     ((GraphFragment) fragment).changeGraph(
-                            (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS),
+                            contactLinkedList,
                             Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
                             TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
                             TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),
