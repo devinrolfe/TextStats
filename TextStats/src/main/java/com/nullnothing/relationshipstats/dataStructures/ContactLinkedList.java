@@ -66,6 +66,7 @@ public class ContactLinkedList implements Parcelable {
         if(head == null) {
             head = node;
             end = node;
+            quickAccessMap.put(node.getData().getId(),node);
         }
         else {
             ContactNode cur = head;

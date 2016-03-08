@@ -24,6 +24,8 @@ import android.widget.TextView;
 import com.nullnothing.relationshipstats.ActivityHelpers.ActionBarButtonUpdater;
 import com.nullnothing.relationshipstats.ActivityHelpers.ContactsAvailability;
 import com.nullnothing.relationshipstats.backgroundProcessing.CollectDataBackground;
+import com.nullnothing.relationshipstats.builders.GraphBuilderHelper;
+import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
 import com.nullnothing.relationshipstats.dataStructures.ContactLinkedList;
 import com.nullnothing.relationshipstats.enumsOrConstants.Category;
 import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
@@ -40,6 +42,7 @@ import com.nullnothing.relationshipstats.navigationMenu.ExpandableListAdapter;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuChanger;
 import com.nullnothing.relationshipstats.navigationMenu.NavigationMenuHolder;
+import com.nullnothing.relationshipstats.requests.GraphChangeRequest;
 import com.nullnothing.relationshipstats.util.NavigationMenuChangeHelper;
 
 import java.security.InvalidParameterException;
@@ -187,9 +190,25 @@ public class TextStatsActivity extends AppCompatActivity
     // Functions below are not used, just place holders for now
     public void openAddContact() {
     }
+
     public void openDeleteContact() {
     }
+
     public void openClearContact() {
+
+        ArrayList<GraphChangeRequest> prevRequests = GraphChangeRequest.prevRequests;
+
+        GraphChangeRequestBuilder builder = new GraphChangeRequestBuilder();
+        if (prevRequests.size() > 0) {
+            ContactLinkedList contactLinkedList = new ContactLinkedList(0,
+                    prevRequests.get(prevRequests.size() - 1).getCategory(),
+                    prevRequests.get(prevRequests.size() - 1).getPeriod());
+
+            builder.contactsToGraph(contactLinkedList);
+
+            GraphBuilderHelper.setGraphNotChangedValues(builder);
+            builder.build().executeRequest();
+        }
     }
 
     // Get next text message in sms logs
@@ -242,8 +261,6 @@ public class TextStatsActivity extends AppCompatActivity
                     contactsAvailability = new ContactsAvailability(contactLinkedList);
 
                     ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
-
-                    // TODO : Update add/delete contact list here
 
                     ((GraphFragment) fragment).changeGraph(
                             contactLinkedList,
