@@ -1,6 +1,7 @@
 package com.nullnothing.relationshipstats.util;
 
 import com.nullnothing.relationshipstats.builders.GraphChangeRequestBuilder;
+import com.nullnothing.relationshipstats.fragments.CardFragment;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
 import com.nullnothing.relationshipstats.fragments.GraphFragment;
 import com.nullnothing.relationshipstats.navigationMenu.ExpandedMenuModel;
@@ -21,13 +22,12 @@ public class NavigationMenuChangeHelper {
                                                   List<ExpandedMenuModel> listDataHeader,
                                                   int groupPosition,
                                                   int childPosition) {
-
-            if (fragment instanceof GraphFragment) {
+            // same nav menu for graph and card fragments at this time
+            if (fragment instanceof GraphFragment || fragment instanceof CardFragment) {
                 changeGraphFragment(
                         listDataHeader.get(groupPosition).getIconName(),
                         listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition).toString());
             }
-
     }
     private static void changeGraphFragment(String changeGraphVariableName,
                                             String changeGraphValueName) {

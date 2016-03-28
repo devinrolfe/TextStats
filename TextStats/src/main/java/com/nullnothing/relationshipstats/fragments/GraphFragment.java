@@ -37,14 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GraphFragment extends Fragment implements com.nullnothing.relationshipstats.fragments.FragmentInterface {
+public class GraphFragment extends Fragment implements FragmentInterface {
 
     private Context context;
     private LineChart mChart;
     private View view;
 
-    com.nullnothing.relationshipstats.fragments.TitleListener mTitleListener;
-    com.nullnothing.relationshipstats.fragments.MenuListener mMenuListener;
+    TitleListener mTitleListener;
+    MenuListener mMenuListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -52,7 +52,7 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mTitleListener = (com.nullnothing.relationshipstats.fragments.TitleListener) activity;
+            mTitleListener = (TitleListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement TitleListener");
@@ -64,7 +64,7 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                mMenuListener = (com.nullnothing.relationshipstats.fragments.MenuListener) getActivity();
+                mMenuListener = (MenuListener) getActivity();
              } catch (ClassCastException e) {
                 throw new ClassCastException(getActivity().toString()
                     + " must implement MenuListener");
@@ -203,6 +203,7 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
     public void changeGraph(ContactLinkedList contactLinkedList, Category category, TimeInterval interval, TimePeriod period, boolean disableLegend) {
 
         mChart.getLegend().setEnabled(!disableLegend);
+        mChart.setNoDataText("Loading text messages...");
 
         LineDataSetCreator.resetColours();
 
@@ -230,7 +231,7 @@ public class GraphFragment extends Fragment implements com.nullnothing.relations
             default:
                 break;
         }
-
+        mChart.setNoDataText("No Data To show");
         Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
     }
 

@@ -34,6 +34,7 @@ public class CardFragment extends Fragment implements FragmentInterface {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         // TODO should implement TitleListener to change title
+        // not implemented
     }
 
     @Override
@@ -55,7 +56,7 @@ public class CardFragment extends Fragment implements FragmentInterface {
 
     public void initialSetup() {
 
-        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
+//        MainInfoHolder mMainInfoHolder = MainInfoHolder.getInstance();
     }
 
 

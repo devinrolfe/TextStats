@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -32,6 +33,7 @@ import com.nullnothing.relationshipstats.enumsOrConstants.Constants;
 import com.nullnothing.relationshipstats.enumsOrConstants.FragmentName;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimeInterval;
 import com.nullnothing.relationshipstats.enumsOrConstants.TimePeriod;
+import com.nullnothing.relationshipstats.fragments.CardFragment;
 import com.nullnothing.relationshipstats.fragments.FragmentInterface;
 import com.nullnothing.relationshipstats.fragments.GraphFragment;
 import com.nullnothing.relationshipstats.fragments.MenuListener;
@@ -107,7 +109,8 @@ public class TextStatsActivity extends AppCompatActivity
                 navigationMenuHolder = NavigationMenuChanger.prepareListDataForGraphFragment();
                 break;
             case CardFragment:
-                navigationMenuHolder = NavigationMenuChanger.prepareListDataForCardFragment();
+//                navigationMenuHolder = NavigationMenuChanger.prepareListDataForCardFragment();
+                navigationMenuHolder = NavigationMenuChanger.prepareListDataForGraphFragment();
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -250,30 +253,42 @@ public class TextStatsActivity extends AppCompatActivity
                     fragment.initialSetup();
                     break;
                 case Constants.CHANGE_GRAPH_REQUEST :
-                    fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
-                            "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
-
-                    if(!(fragment instanceof GraphFragment)) {
-                        throw new InvalidParameterException();
-                    }
-
-                    ContactLinkedList contactLinkedList = (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS);
-                    contactsAvailability = new ContactsAvailability(contactLinkedList);
-
-                    ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
-
-                    ((GraphFragment) fragment).changeGraph(
-                            contactLinkedList,
-                            Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
-                            TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
-                            TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),
-                            intent.getBooleanExtra(Constants.EXTENDED_DATA_DISABLE_LEGEND, false)
-                    );
+                    handleChangeGraphRequest(intent);
                     break;
-                // TODO CHANGE_CARD_REQUEST
                 default:
                     break;
             }
         }
     }
+
+    private void handleChangeGraphRequest(Intent intent) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+        for (Fragment fragmentInList : fragments) {
+
+            if (fragmentInList instanceof  GraphFragment) {
+                changeGraphFragment((FragmentInterface) fragmentInList, intent);
+            } else if (fragmentInList instanceof CardFragment) {
+                // TODO : Need to create raw list
+            }
+
+        }
+    }
+
+    private void changeGraphFragment(FragmentInterface fragment, Intent intent) {
+        ContactLinkedList contactLinkedList = (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS);
+        contactsAvailability = new ContactsAvailability(contactLinkedList);
+
+        ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
+
+        ((GraphFragment) fragment).changeGraph(
+                contactLinkedList,
+                Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
+                TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
+                TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),
+                intent.getBooleanExtra(Constants.EXTENDED_DATA_DISABLE_LEGEND, false)
+        );
+    }
+
+
 }
