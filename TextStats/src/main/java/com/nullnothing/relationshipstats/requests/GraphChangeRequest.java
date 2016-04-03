@@ -51,7 +51,7 @@ public class GraphChangeRequest implements Request {
         return prevRequests.size() > 0;
     }
 
-    public Request getPreviousRequest() {
+    public static Request getPreviousRequest() {
         if(prevRequests.size() > 1) return prevRequests.get(prevRequests.size() - 1);
         return null;
     }

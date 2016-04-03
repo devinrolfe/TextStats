@@ -93,7 +93,7 @@ public class ContactInfoHolder {
     public int getTextBothCount(TimePeriod timePeriod) {
         switch (timePeriod) {
             case ALL_TIME:
-                return this.yearTextSent + this.allTextReceived;
+                return this.allTextSent + this.allTextReceived;
             case YEAR:
                 return this.yearTextSent + this.yearTextReceived;
             case MONTH:

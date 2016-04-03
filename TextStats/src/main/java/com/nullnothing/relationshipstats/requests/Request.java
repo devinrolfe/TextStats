@@ -7,5 +7,4 @@ import com.nullnothing.relationshipstats.builders.Builder;
 public interface Request {
     void executeRequest();
     boolean isPreviousRequest();
-    Request getPreviousRequest();
 }

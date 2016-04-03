@@ -208,7 +208,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
         LineDataSetCreator.resetColours();
 
         long startTime = System.currentTimeMillis();
-        Log.d("Graph Initial Setup", "START " + startTime);
+        Log.d("Graph change", "START " + startTime);
 
         List<String> xValueList = DataPointCollection.getXValues(interval, period, category);
         contactLinkedList.setXValues(xValueList);
@@ -232,7 +232,7 @@ public class GraphFragment extends Fragment implements FragmentInterface {
                 break;
         }
         mChart.setNoDataText("No Data To show");
-        Log.d("Graph Initial Setup", "END " + (System.currentTimeMillis() - startTime));
+        Log.d("Graph change", "END " + (System.currentTimeMillis() - startTime));
     }
 
 }

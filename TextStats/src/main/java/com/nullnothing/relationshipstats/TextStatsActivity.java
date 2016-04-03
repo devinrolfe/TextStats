@@ -248,9 +248,13 @@ public class TextStatsActivity extends AppCompatActivity
                 case Constants.STATE_ACTION_COMPLETE:
                     Log.d("CollectData", "Finished");
 
-                    fragment = (FragmentInterface) getSupportFragmentManager().findFragmentByTag(
-                            "android:switcher:" + R.id.viewpager + ":" + viewPager.getCurrentItem());
-                    fragment.initialSetup();
+                    List<Fragment> fragments = getSupportFragmentManager().getFragments();
+
+                    for (Fragment fragmentInList : fragments) {
+                        if (fragmentInList instanceof  GraphFragment) {
+                            ((GraphFragment) fragmentInList).initialSetup();
+                        }
+                    }
                     break;
                 case Constants.CHANGE_GRAPH_REQUEST :
                     handleChangeGraphRequest(intent);
@@ -270,6 +274,9 @@ public class TextStatsActivity extends AppCompatActivity
                 changeGraphFragment((FragmentInterface) fragmentInList, intent);
             } else if (fragmentInList instanceof CardFragment) {
                 // TODO : Need to create raw list
+                ((CardFragment) fragmentInList).initialSetup();
+
+                changeCardFragment((FragmentInterface) fragmentInList, intent);
             }
 
         }
@@ -282,6 +289,21 @@ public class TextStatsActivity extends AppCompatActivity
         ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
 
         ((GraphFragment) fragment).changeGraph(
+                contactLinkedList,
+                Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
+                TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),
+                TimePeriod.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_PERIOD)),
+                intent.getBooleanExtra(Constants.EXTENDED_DATA_DISABLE_LEGEND, false)
+        );
+    }
+
+    private void changeCardFragment(FragmentInterface fragment, Intent intent) {
+        ContactLinkedList contactLinkedList = (ContactLinkedList)intent.getParcelableExtra(Constants.EXTENDED_DATA_CONTACTS);
+        contactsAvailability = new ContactsAvailability(contactLinkedList);
+
+        ActionBarButtonUpdater.updateActionBarButtons(activityMenu, contactsAvailability);
+
+        ((CardFragment) fragment).changeCard(
                 contactLinkedList,
                 Category.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_CATEGORY)),
                 TimeInterval.getValueOf(intent.getStringExtra(Constants.EXTENDED_DATA_INTERVAL)),

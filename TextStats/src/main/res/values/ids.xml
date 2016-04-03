@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
 
     <!--<item name="graphTitleId" type="id" />-->
+    <!--<TextView-->
+        <!--android:orientation="vertical" android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:id="@+id/cardView"-->
+        <!-->-->
 
+    <!--</TextView>-->
 
 </resources>
