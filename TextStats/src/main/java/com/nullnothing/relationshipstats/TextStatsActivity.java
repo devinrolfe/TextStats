@@ -167,6 +167,10 @@ public class TextStatsActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_relationship_stats, menu);
         activityMenu = menu;
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
         return super.onCreateOptionsMenu(menu);
     }
 
